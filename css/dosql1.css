@@ -1,0 +1,48 @@
+.dbname {
+    cursor: pointer;
+}
+
+img {
+    display: inline-block;
+    padding: 0;
+}
+
+.sm {
+    height: 15px;
+    vertical-align: middle;
+}
+
+.jt {
+    margin-right: -6px;
+}
+
+.dbs {
+    margin-right: 5px;
+}
+
+.dbname {
+    display: inline-block; 
+    user-select: none;
+    margin: 0;
+    padding: 0;
+} 
+
+.lf {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.dbs-con {
+    width: 20%;
+    box-sizing: border-box;
+    padding-right: 10px;
+    background: rgb(209, 208, 208);
+}
+
+.tbs-con {
+    width: 79%;
+}
+.active{
+    font-weight: 600;
+}
