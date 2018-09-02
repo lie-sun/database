@@ -51,26 +51,62 @@ $(document).ready(function () {
                 if (useresult) {
                     var usename = useresult[useresult.length - 1];
                     $(".dbname").removeClass("active");
-                    $("." + usename).children("p").addClass("active");
+                    $("." + usename).children("p").addClass("active").children(".jt").attr("src", "images/jt-b.png");
                     dbName = usename;
+
                 } else {
                     //建表
                     var createtablereg = /^create\stable\s(\w+)/i;
                     var createtableresult = createtablereg.exec(sql);
                     if (createtableresult) {
+                        if (!dbName) {
+                            alert("请选择数据库后在创建表");
+                            return false;
+                        }
                         var tablename = createtableresult[createtableresult.length - 1];
                         var index = createtableresult.input.trim().indexOf("(");
                         var lastindex = createtableresult.input.trim().lastIndexOf(")");
                         var tablestr = createtableresult.input.substring(index + 1, lastindex);
                         var tableArr = tablestr.split(",");
-                        if(!dbName){
-                            alert("请选择数据库后在创建表");
-                            return false;
+                        var talen = tableArr.length;
+                        var threg = /^\s*(\w*)\s*/i;
+                        var tbstr = "<table class='"+tablename+"'><thead><tr>";
+                        for (var i = 0; i < talen; i++) {
+                            tbstr+="<th>"+threg.exec(tableArr[i])[1]+"</th>";
                         }
-                        
-                    }else{
+                        tbstr+="</th></thead>";
+                        $(".tbs-con table").hide();
+                        $(".tbs-con").append(tbstr);
+                        var dbsli = "<li class='"+tablename+" litbs'>"+tablename+"</li>";
+                        $("."+dbName).append(dbsli);
+                    } else {
                         //删除表
-                        
+                        var deltablereg = /^\s*drop\s*table\s*(\w+)/i;
+                        var deltableresult = deltablereg.exec(sql);
+                        if(deltableresult){
+                            if (!dbName) {
+                                alert("请选择删除所在表数据库");
+                                return false;
+                            }
+                            var deltablename = deltableresult[deltableresult.length-1];
+                            $(".dbs-con li."+deltablename).remove();
+                            $(".tbs-con table."+deltablename).remove();
+                        }else{
+                            //修改表
+                            // if (!dbName) {
+                            //     alert("请选择删除所在表数据库");
+                            //     return false;
+                            // }
+                            console.log(123456)
+                            var altertablereg = /^\s*alter\s*table\s*(\w*)add\s*(\w*)\s*(\w*)/i;
+                            var altertableresult = altertablereg.exec(sql);
+                            console.log(altertableresult);
+                            if(altertableresult){
+                                console.log(altertableresult);
+                                var altertablename = altertableresult[altertableresult.length-2];
+                            }
+                        }
+
                     }
                 }
             }

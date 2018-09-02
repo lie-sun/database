@@ -31,6 +31,7 @@ img {
     display: inline-block;
     margin: 0;
     padding: 0;
+    vertical-align: top;
 }
 
 .dbs-con {
@@ -41,8 +42,27 @@ img {
 }
 
 .tbs-con {
-    width: 79%;
+    width: 78%;
 }
 .active{
     font-weight: 600;
+}
+table{
+    border-collapse:collapse;
+    margin-top: 30px;
+}
+ table,th,td{
+    border: 1px solid #e2e2e2;
+}
+th,td{
+padding: 2px 3px;
+}
+li{
+    list-style: none;
+}
+
+.litbs{
+    margin: 15px 25px;
+    margin-right: 0;
+
 }
