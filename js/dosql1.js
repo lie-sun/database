@@ -70,48 +70,56 @@ $(document).ready(function () {
                         var tableArr = tablestr.split(",");
                         var talen = tableArr.length;
                         var threg = /^\s*(\w*)\s*/i;
-                        var tbstr = "<table class='"+tablename+"'><thead><tr>";
+                        var tbstr = "<table class='" + tablename + "'><thead><tr>";
                         for (var i = 0; i < talen; i++) {
-                            tbstr+="<th>"+threg.exec(tableArr[i])[1]+"</th>";
+                            tbstr += "<th>" + threg.exec(tableArr[i])[1] + "</th>";
                         }
-                        tbstr+="</th></thead>";
+                        tbstr += "</th></thead>";
                         $(".tbs-con table").hide();
                         $(".tbs-con").append(tbstr);
-                        var dbsli = "<li class='"+tablename+" litbs'>"+tablename+"</li>";
-                        $("."+dbName).append(dbsli);
+                        var dbsli = "<li class='" + tablename + " litbs'>" + tablename + "</li>";
+                        $("." + dbName).append(dbsli);
                     } else {
                         //删除表
                         var deltablereg = /^\s*drop\s*table\s*(\w+)/i;
                         var deltableresult = deltablereg.exec(sql);
-                        if(deltableresult){
+                        if (deltableresult) {
                             if (!dbName) {
                                 alert("请选择删除所在表数据库");
                                 return false;
                             }
-                            var deltablename = deltableresult[deltableresult.length-1];
-                            $(".dbs-con li."+deltablename).remove();
-                            $(".tbs-con table."+deltablename).remove();
-                        }else{
-                            //修改表
-                            // if (!dbName) {
-                            //     alert("请选择删除所在表数据库");
-                            //     return false;
-                            // }
-                            console.log(123456)
-                            var altertablereg = /^\s*alter\s*table\s*(\w*)add\s*(\w*)\s*(\w*)/i;
+                            var deltablename = deltableresult[deltableresult.length - 1];
+                            $(".dbs-con li." + deltablename).remove();
+                            $(".tbs-con table." + deltablename).remove();
+                        } else {
+                            //修改表之添加
+                            var altertablereg = /^\s*alter\s+table\s+(\w*)\s*add\s*((\w*)\s*(\w*))*/i;
                             var altertableresult = altertablereg.exec(sql);
-                            console.log(altertableresult);
-                            if(altertableresult){
-                                console.log(altertableresult);
-                                var altertablename = altertableresult[altertableresult.length-2];
+                            if (altertableresult) {
+                                if (!dbName) {
+                                    alert("请选择删除所在表数据库");
+                                    return false;
+                                }
+                                var altertablename = altertableresult[1]; //表名
+                                var altertablethname = altertableresult[2]; //添加字段的名字
+                                var addthstr = "<th>" + altertablethname + "</th>";
+                                $("table." + altertablename + " thead tr").append(addthstr);
+                            } else {
+                                // 修改表之删除
+                                var altertabledelreg = /^\s*alter\s+table\s+(\w+)\s+drop\s+(\w+)/i;
+                                var altertabledelresult = altertabledelreg.exec(sql);
+                                console.log(altertabledelresult);
+                                if (altertabledelresult) {
+                                    if (!dbName) {
+                                        alert("请选择删除所在表数据库");
+                                        return false;
+                                    }
+                                }
                             }
                         }
-
                     }
                 }
             }
         }
-
-
     })
 })
