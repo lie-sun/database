@@ -1,0 +1,25 @@
+.expre-con{
+    width: 100%;
+}
+.expre-con>h3{
+    text-align: center;
+    line-height: 80px;
+}
+#textcon{
+    display: inline-block;
+    width: 100%;
+    resize: vertical;
+    box-sizing: border-box;
+    padding: 15px;
+}
+.cons{
+    width: 49.8%;
+    display: inline-block;
+}
+.frame{
+    width: 99%;
+    display: inline-block;
+    height: 460px;
+    border: 1px solid #e2e2e2;
+
+}

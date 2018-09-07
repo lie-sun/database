@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+    <title>数据库技术原理与实践</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="../static/font-awesome//4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/highlight.js/9.8.0/monokai-sublime.min.css">
+    <link rel="stylesheet" href="../app/css/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../app/css/libs/katex/0.6.0/katex.min.css">
+    <link rel="stylesheet" href="../app/css/libs/videojs/5.11.7/video-js.min.css">
+    <link rel="stylesheet" href="../app/css/dest/styles.css?=2016121272249">
+    <link rel="stylesheet" href="./public.css">
+
+    <style>
+        @font-face {
+            font-family: "lantingxihei";
+            src: url("../fonts/FZLTCXHJW.TTF");
+        }
+
+        /* modal 模态框*/
+        #invite-user .modal-body {
+            overflow: hidden;
+        }
+
+        #invite-user .modal-body .form-label {
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        #invite-user .modal-body .form-invite {
+            width: 80%;
+            padding: 6px 12px;
+            background-color: #eeeeee;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        #invite-user .modal-body .msg-modal-style {
+            background-color: #7dd383;
+            margin-top: 10px;
+            padding: 6px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        #invite-user .modal-body .modal-flash {
+            position: absolute;
+            top: 53px;
+            right: 74px;
+            z-index: 999;
+        }
+
+        /* end modal */
+
+        .en-footer {
+            padding: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+    <link rel="stylesheet" href="../restatic/js/libs/marked/katex/katex.min.css">
+    <style>
+        .bootcamp-infobox {
+            margin: 50px 0 0;
+        }
+
+        .invite-friends-link {
+            margin-top: 10px;
+            padding-left: 8px;
+        }
+
+        .invite-friends-link input {
+            margin-left: -5px;
+        }
+
+        .invite-friends-link button {
+            float: left;
+            margin-top: 5px;
+            margin-left: -5px;
+        }
+
+        .invite-friends-link .copy-msg {
+            float: left;
+            margin-top: 10px;
+            margin-left: 20px;
+            color: #42b1ad;
+        }
+
+        p.join-vip-faq {
+            margin-top: 20px;
+            margin-bottom: -50px;
+            font-size: 13px;
+        }
+
+        p.join-vip-faq img {
+            height: 13px;
+            width: 13px;
+            margin-top: -2px;
+        }
+
+        a.vip-without-bean {
+            font-size: 18px;
+            line-height: 30px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-default navbar-fixed-top header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#header-navbar-collapse" aria-expanded="false">
+                <span class="sr-only">NUC虚拟仿真在线实验平台</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">
+                <img src="../img/logo.gif">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown ">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                        课程
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="" href="../courses/index.html">全部课程</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="../questions/index.html">困惑讨论区</a>
+                </li>
+
+            </ul>
+
+
+            <div class="navbar-right btns">
+                <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
+                <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+
+<div class="container layout layout-margin-top">
+
+    <ol class="breadcrumb">
+        <li><a href="../courses/index.html">全部课程</a></li>
+
+        <li class="active">
+            <a href="../courses/databaseshow.html">
+                数据库技术原理与实践
+            </a>
+        </li>
+        <li class="active">
+            <a>
+                数据库原理与应用第2节
+            </a>
+        </li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-12 layout-body">
+
+
+            <div class="content">
+                <div class="tab-content">
+                    <!--开始内容-->
+                    <div class="dcontainers">
+                        <h4>实验一 SQL的数据定义与单表数据查询（2学时）</h4>
+                        <!--实验目的-->
+                        <div class="shiyanmudi">
+                            <h5>1、实验目的</h5>
+                            <p>(1)掌握RDBMS的数据多表查询功能</p>
+                            <p>(2)掌握SQL语言的数据多表查询语句</p>
+
+                        </div>
+                        <!--实验内容-->
+                        <div class="shiyanneirong">
+                            <h5>2、实验内容</h5>
+                            <p>(1)等值连接查询（含自然连接查询）与非等值连接查询</p>
+                            <p>(2)自身连接查询</p>
+                            <p>(3)外连接查询</p>
+                            <p>(4)复合条件连接查询</p>
+                            <p>(5)嵌套查询（带有IN谓词的子查询）</p>
+                            <p>(6)嵌套查询（带有比较运算符的子查询）</p>
+                            <p>(7)嵌套查询（带有ANY或ALL谓词的子查询）</p>
+                            <p>(8)嵌套查询（带有EXISTS谓词的子查询）</p>
+                            <p>(9)集合查询</p>
+                        </div>
+                        <!--实验要求-->
+                        <div class="shiyanyaoqiu">
+                            <h5>3、实验要求</h5>
+                            <p>(1)熟练掌握SQL的连接查询语句</p>
+                            <p>(2)熟练掌握SQL的嵌套查询语句</p>
+                            <p>(3)掌握表名前缀、别名前缀的用法</p>
+                            <p>(4)掌握不相关子查询和相关子查询的区别和用法</p>
+                            <p>(5)掌握不同查询之间的等价替换方法（一题多解）及限制</p>
+                            <p>(6)记录实验结果，认真完成实验报告</p>
+                        </div>
+                        <!--实验步骤-->
+                        <div class="shiyanbuzhou">
+                            <h5>4、实验步骤</h5>
+                            <h6>4.1 建立示例数据库S_T（复习）</h6>
+                            <h6>表Student</h6>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>学号 Sno</td>
+                                    <td>姓名 Sname</td>
+                                    <td>性别 Ssex</td>
+                                    <td>年龄 Sage</td>
+                                    <td>所在系 Sdept</td>
+                                </tr>
+
+                                <tr>
+                                    <td>200215121</td>
+                                    <td>李勇</td>
+                                    <td> 男</td>
+                                    <td>20</td>
+                                    <td>CS</td>
+                                </tr>
+                                <tr>
+                                    <td>200215122</td>
+                                    <td>刘晨</td>
+                                    <td>女</td>
+                                    <td>19</td>
+                                    <td>CS</td>
+                                </tr>
+                                <tr>
+                                    <td>200215123</td>
+                                    <td>王敏</td>
+                                    <td>女</td>
+                                    <td>18</td>
+                                    <td>MA</td>
+                                </tr>
+                                <tr>
+                                    <td>200215125</td>
+                                    <td>张立</td>
+                                    <td>男</td>
+                                    <td>19</td>
+                                    <td>IS</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <h6>表Course</h6>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>课程号
+                                        Cno
+                                    </td>
+                                    <td>课程名
+                                        Cname
+                                    </td>
+                                    <td>现行课
+                                        Cpno
+                                    </td>
+                                    <td>学分
+                                        Ccredit
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>数据库</td>
+                                    <td>5</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>数学</td>
+                                    <td></td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>信息系统</td>
+                                    <td>5</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>操作系统</td>
+                                    <td>6</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>数据结构</td>
+                                    <td>7</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>数据处理</td>
+                                    <td></td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>PASCAL语言</td>
+                                    <td>6</td>
+                                    <td>4</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <h6>表SC</h6>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>学号
+                                        Sno
+                                    </td>
+                                    <td>课程号
+                                        Cno
+                                    </td>
+                                    <td>成绩
+                                        Grade
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>200215121</td>
+                                    <td>1</td>
+                                    <td>92</td>
+                                </tr>
+                                <tr>
+                                    <td>200215121</td>
+                                    <td>2</td>
+                                    <td>85</td>
+                                </tr>
+                                <tr>
+                                    <td>200215121</td>
+                                    <td>3</td>
+                                    <td>88</td>
+                                </tr>
+                                <tr>
+                                    <td>200215122</td>
+                                    <td>2</td>
+                                    <td>90</td>
+                                </tr>
+                                <tr>
+                                    <td>200215122</td>
+                                    <td>3</td>
+                                    <td>80</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <p> 在SQL Server集成管理器的查询窗口中输入如下SQL语句序列来创建示例数据库。</p>
+                            <p>/* 创建示例数据库S_T，包括3个表，即学生表Student、课程表Course和选课表SC*/</p>
+                            <pre>    create database S_T;</pre>
+
+                            <p>/*将S_T设为当前数据库*/</p>
+                            <pre>    use S_T;</pre>
+
+
+                            <p>/*表Student的主码为Sno，属性列Sname取唯一值*/</p>
+                            <pre>    create table Student
+         (Sno CHAR(9) PRIMARY KEY,
+          Sname CHAR(20) UNIQUE,
+          Ssex CHAR(2),
+          Sage SMALLINT,
+          Sdept CHAR(20)
+          );
+    go</pre>
+                            <p>/*表Course的主码为Cno，属性列Cpno(先修课)为外码，被参照表为Course，被参照列是Cno*/</p>
+                            <pre>    create table Course
+         (Cno CHAR(4) PRIMARY KEY,
+         Cname CHAR(40),
+         Cpno CHAR(4),
+         Ccredit SMALLINT,
+         FOREIGN KEY (Cpno) REFERENCES Course(Cno)
+         );
+    go</pre>
+                            <p>/*表SC的主码为(Sno, Cno),
+                                Sno和Cno均为外码，被参照表分别为Student和Course，被参照列分别为Student.Sno和Course.Cno*/</p>
+                            <pre>    create table SC
+         (Sno CHAR(9),
+         Cno CHAR(4),
+         Grade SMALLINT,
+         primary key (Sno, Cno),
+         FOREIGN KEY (Sno) REFERENCES Student(Sno),
+         FOREIGN KEY (Cno) REFERENCES Course(Cno)
+         );
+    go</pre>
+                            <p>/*为表Student添加数据*/</p>
+                            <pre>    insert into student values('200215121','李勇','男',20,'CS');
+    insert into student values('200215122','刘晨','女',19,'CS');
+    insert into student values('200215123','王敏','女',18,'MA');
+    insert into student values('200215125','张立','男',19,'IS');
+    go</pre>
+                            <p>/*为表Course添加数据*/</p>
+                            <pre>    insert into course values('1', '数据库', NULL,4);
+    insert into course values('2', '数学',  NULL,2);
+    insert into course values('3', '信息系统', NULL,4);
+    insert into course values('4', '操作系统', NULL,3);
+    insert into course values('5', '数据结构', NULL,4);
+    insert into course values('6', '数据处理', NULL, 2);
+    insert into course values('7', 'PASCAL语言',  NULL,4);
+    go
+    update Course set Cpno = '5' where Cno = '1';
+    update Course set Cpno = '1' where Cno = '3';
+    update Course set Cpno = '6' where Cno = '4';
+    update Course set Cpno = '7' where Cno = '5';
+    update Course set Cpno = '6' where Cno = '7';</pre>
+                            <p>/*为表SC添加数据*/</p>
+                            <pre>    insert into SC values('200215121', '1',92);
+    insert into SC values('200215121', '2',85);
+    insert into SC values('200215121', '3',88);
+    insert into SC values('200215122', '2',90);
+    insert into SC values('200215122', '3',80);</pre>
+                            <br>
+                            <h6>4.2 对学生关系Student、课程关系Course和选修关系SC进行多表查询</h6>
+                            <h6>4.2.1 基本练习</h6>
+
+                            <p>（1）等值连接查询与自然连接查询</p>
+                            <p>例如：查询每个学生及其选修课的情况。</p>
+                            <pre>    SELECT Student.*, SC.*
+    FROM Student, SC
+    WHERE Student.Sno = SC.Sno; /* 一般等值连接 */</pre>
+                            <p>又如：查询每个学生及其选修课的情况（去掉重复列）。</p>
+                            <pre>    SELECT Student.Sno, Sname, Ssex, Sage, Cno, Grade
+    FROM Student, SC
+    WHERE Student.Sno = SC.Sno;  /* 自然连接--特殊的等值连接 */</pre>
+                            <p>（2）自身连接查询</p>
+                            <p>例如：查询每一门课的间接先修课。</p>
+                            <pre>    SELECT FIRST.Cno, SECOND.Cpno
+    FROM Course FIRST, Course SECOND
+    WHERE FIRST.Cpno = SECOND.Cno;</pre>
+                            <p>（3）外连接查询</p>
+                            <p>例如：查询每个学生及其选修课的情况（要求输出所有学生--含未选修课程的学生的情况）</p>
+                            <pre>    SELECT Student.Sno, Sname, Ssex, Sage, Sdept, Cno, Grade
+    FROM Student LEFT OUT JOIN SC ON(Student.Sno = SC.Sno);</pre>
+                            <p>（4）复合条件连接查询</p>
+                            <p>例如：查询选修了2号课程而且成绩在90以上的所有学生的学号和姓名。</p>
+                            <pre>    SELECT Student.Sno, Sname
+    FROM Student, SC
+    WHERE Student.Sno = SC.Sno AND
+    SC.Cno = ‘2' AND SC.Grade >= 90;</pre>
+                            <p>又如：查询每个学生的学号、姓名、选修的课程名及成绩。</p>
+                            <pre>    SELECT Student.Sno, Sname, Cname, Grade
+    FROM Student, SC, Course
+    WHERE Student.Sno = SC.Sno AND
+    SC.Cno = Course.Cno;</pre>
+                            <p>（5）嵌套查询（带有IN谓词的子查询）</p>
+                            <p>例如：查询与“刘晨”在同一个系学习的学生的学号、姓名和所在系。</p>
+                            <pre>    SELECT Sno, Sname, Sdept
+    FROM Student
+    WHERE Sdept IN
+    (SELECT Sdept
+    FROM Student
+    WHERE Sname = '刘晨');   /* 解法一*/</pre>
+                            <p> 可以将本查询中的IN谓词用比较运算符‘=’来代替：</p>
+                            <pre>    SELECT Sno, Sname, Sdept
+    FROM Student
+    WHERE Sdept =
+    (SELECT Sdept
+    FROM Student
+    WHERE Sname = '刘晨');   /* 解法二*/</pre>
+                            <p>也可以使用自身连接完成以上查询：</p>
+                            <pre>    SELECT s1.Sno, s1.Sname, s1.Sdept
+    FROM Student s1, Student s2
+    WHERE s1.Sdept = S2.Sdept AND
+    s2.Sname = '刘晨';       /* 解法三*/</pre>
+                            <p>还可以使用EXISTS谓词完成本查询：</p>
+                            <pre>    SELECT Sno, Sname, Sdept
+    FROM Student S1
+    WHERE EXISTS
+    (SELECT * FROM Student S2
+    WHERE S2.Sdept=S1.Sdept AND S2.Sname='刘晨'); /* 解法四*/</pre>
+
+                            <p>又如：查询选修了课程名为“信息系统”的学生号和姓名。</p>
+                            <pre>    SELECT Sno, Sname
+    FROM Student
+    WHERE Sno IN
+    (SELECT Sno
+    FROM SC
+    WHERE Cno IN
+    (SELECT Cno
+    FROM Course
+    WHERE Cname = '信息系统'
+    )
+    );</pre>
+                            <p>也可以使用连接查询来完成上述查询：</p>
+                            <pre>    SELECT Student.Sno, Sname
+    FROM Student, SC, Course
+    WHERE Student.Sno = SC.Sno AND
+    SC.Cno = Course.Cno AND
+    Course.Cname = '信息系统';</pre>
+
+                            <p>（6）嵌套查询（带有比较运算符的子查询）</p>
+                            <p> 例如：找出每个学生超过他所选修课程平均成绩的课程号。</p>
+                            <pre>    SELECT Sno, Cno
+    FROM SC x
+    WHERE Grade >= ( SELECT AVG(Grade)
+    FROM SC y
+    WHERE y.Sno = x.Sno);</pre>
+                            <p>（7）嵌套查询（带有ANY或ALL谓词的子查询）</p>
+                            <p>例如：查询其他系中比计算机系某个学生年龄小的学生的姓名和年龄。</p>
+                            <pre>    SELECT Sname, Sage
+    FROM  Student
+    WHERE Sage <ANY (SELECT Sage
+                    FROM Student
+                    WHERE Sdept='CS' )
+                    AND Sdept><> 'CS';</pre>
+                            <p>本查询也可以使用聚集函数来实现：</p>
+                            <pre>    SELECT Sname, Sage
+    FROM  Student
+    WHERE Sage < (SELECT MAX(Sage)
+    FROM Student
+    WHERE Sdept = 'CS')
+    AND Sdept <> 'CS';</pre>
+                            <p>又如：查询其他系中比计算机系所有学生年龄都小的学生的姓名和年龄。</p>
+                            <pre>    SELECT Sname, Sage
+    FROM  Student
+    WHERE Sage <ALL (SELECT Sage
+                    FROM Student
+                    WHERE Sdept='CS' )
+                    AND Sdept><> 'CS';</pre>
+                            <p>也可以使用聚集函数来实现：</p>
+                            <pre>    SELECT Sname, Sage
+    FROM  Student
+    WHERE Sage < (SELECT MIN(Sage)
+    FROM Student
+    WHERE Sdept = 'CS')
+    AND Sdept <> 'CS';</pre>
+                            <p>（8）嵌套查询（带有EXISTS谓词的子查询）</p>
+                            <p>例如：查询所有选修了1号课程的学生姓名。</p>
+                            <pre>    SELECT Sname
+    FROM Student
+    WHERE EXISTS
+    (SELECT *
+    FROM SC
+    WHERE Sno=Student.Sno AND Cno='1');</pre>
+
+                            <p>又如：查询所有未选修1号课程的学生姓名。</p>
+                            <pre>    SELECT Sname
+    FROM Student
+    WHERE NOT EXISTS
+    (SELECT *
+    FROM SC
+    WHERE Sno=Student.Sno AND Cno='1');</pre>
+                            <p>可以使用带有EXISTS谓词的子查询实现全称量词或蕴涵逻辑运算功能：</p>
+                            <p>例如：查询选修了全部课程的学生姓名。</p>
+                            <pre>    SELECT Sname
+    FROM Student
+    WHERE NOT EXISTS
+    (SELECT *
+    FROM Course
+    WHERE NOT EXISTS
+    (SELECT *
+    FROM SC
+    WHERE Sno=Student.Sno AND
+    Cno=Course.Cno));</pre>
+                            <p>又如：查询至少选修了学生200215122选修的全部课程的学生号码。</p>
+                            <pre>    SELECT DISTINCT Sno
+    FROM SC SCX
+    WHERE NOT EXISTS
+    (SELECT *
+    FROM SC SCY
+    WHERE SCY.Sno='200215122' AND
+    NOT EXISTS
+    (SELECT *
+    FROM SC SCZ
+    WHERE SCZ.Sno=SCX.Sno AND
+    SCZ.Cno=SCY.Cno));</pre>
+                            <p>（9）集合查询</p>
+                            <p>例如：查询计算机系的学生以及年龄不大于19岁的的学生。</p>
+                            <pre>    SELECT *
+    FROM Student
+    WHERE Sdept='CS'
+    UNION      /*并集运算*/
+    SELECT *
+    FROM Student
+    WHERE Sage<=19;</pre>
+
+                            <p>可以改用多重条件查询：</p>
+                            <pre>    SELECT *
+    FROM Student
+    WHERE Sdept='CS' OR Sage<=19;</pre>
+                            <p>又如：查询既选修了课程1又选修了课程2的学生（交集运算）。</p>
+                            <pre>    SELECT Sno
+    FROM SC
+    WHERE Cno='1'
+    INTERSECT        /*交集运算*/
+    SELECT Sno
+    FROM SC
+    WHERE Cno='2';</pre>
+
+                            <p>可以使用嵌套查询：</p>
+                            <pre>   SELECT Sno
+    FROM SC
+    WHERE Cno='1' AND Sno IN
+    (SELECT Sno
+    FROM SC
+    WHERE Cno='2');</pre>
+                            <p>思考：能不能改用多重条件查询？</p>
+                            <pre>    SELECT Sno
+    FROM SC
+    WHERE Cno='1' AND Cno='2';</pre>
+
+                            <p>再如：查询计算机系的学生与年龄不大于19岁的学生的差集。</p>
+                            <pre>    SELECT *
+    FROM Student
+    WHERE Sdept='CS'
+    EXCEPT        /*差集运算*/
+    SELECT *
+    FROM Student
+    WHERE Sage<=19;</pre>
+
+                            <p>可以改用多重条件查询：</p>
+                            <pre>    SELECT *
+    FROM Student
+    WHERE Sdept='CS' AND Sage>19;</pre>
+                            <br>
+                            <h6>4.2.2 扩展练习（要求写出并执行SQL语句完成以下各种操作，记录查询结果）</h6>
+                            <p>（1）查询每门课程及其被选情况（输出所有课程中每门课的课程号、课程名称、选修该课程的学生学号及成绩--如果没有学生选择该课，则相应的学生学号及成绩为空值）。</p>
+                            <p>（2）查询与“张立”同岁的学生的学号、姓名和年龄。（要求使用至少3种方法求解）</p>
+                            <p>（3）查询选修了3号课程而且成绩为良好（80~89分）的所有学生的学号和姓名。</p>
+                            <p>（4）查询学生200215122选修的课程的课程号、课程名</p>
+                            <p>（思考：如何查询学生200215122选修的课程的课程号、课程名及成绩？）</p>
+                            <p>（5）找出每个学生低于他所选修课程平均成绩5分以上的课程号。（输出学号和课程号）</p>
+                            <p>（6）查询比所有男生年龄都小的女生的学号、姓名和年龄。</p>
+                            <p>（7）查询所有选修了2号课程的学生姓名及所在系。</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade askquestion-modal" id="askquestion" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role=document>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">发帖</h4>
+            </div>
+            <div class="modal-body words-ctrl">
+                <form class="form-horizontal" action="/questions/">
+                    <input name="_csrf_token" type=hidden value="1483794941##be4fb68b276c5f7cb970936cb25985cd53b943d1">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">标题</label>
+                        <div class="col-md-10">
+                            <input type="text" name="title" min="5" max="100" class="form-control" placeholder="至少输入5个字"
+                                   value="">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">描述</label>
+                        <div class="col-md-10">
+
+
+                            <div class="tabpanel mkeditor">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#mkeditor-editor" role="tab" data-toggle="tab">编辑</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a class="mkeditor-btn-view" href="#mkeditor-viewer" role="tab"
+                                           data-toggle="tab">预览</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active mkeditor-editor" id="mkeditor-editor" role="tabpanel">
+
+                                        <div class="btn-group" role="group">
+
+                                            <button type="button" class="btn btn-default mkeditor-btn-bold">
+                                                <i class="fa fa-bold"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default mkeditor-btn-italic">
+                                                <i class="fa fa-italic"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default mkeditor-btn-link">
+                                                <i class="fa fa-link"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default mkeditor-btn-quote">
+                                                <i class="fa fa-quote-left"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default mkeditor-btn-code">
+                                                <i class="fa fa-code"></i>
+                                            </button>
+                                            <button id="mkeditor-pickfile" type="button"
+                                                    class="btn btn-default mkeditor-btn-img">
+                                                <i class="fa fa-image"></i>
+                                            </button>
+
+                                            <button type="button" class="btn btn-default mkeditor-btn-listol">
+                                                <i class="fa fa-list-ol"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default mkeditor-btn-listul">
+                                                <i class="fa fa-list-ul"></i>
+                                            </button>
+                                        </div>
+                                        <div class="btn-group pull-right" role="group">
+                                            <a style="font-size:12px; color:#666; text-decoration:underline;"
+                                               href="/questions/764" target="_blank">
+                                                <i class="fa fa-question-circle"></i>Markdown 语法
+                                            </a>
+                                        </div>
+                                        <textarea name="content" class="content"
+                                                  min="0" max="20000"
+                                                  placeholder="推荐使用 Markdown 语法，至少输入 5 个字"></textarea>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="tab-pane mkeditor-viewer markdown-body" id="mkeditor-viewer"
+                                         role="tabpanel">
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">板块</label>
+                        <div class="col-md-10">
+                            <div class="q-types" data-type="">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="submit-question btn btn-primary" href="/vip" target="_blank"
+                   style="background:#FFFFFF;color:#00CC99;border:none;float:left;padding-left:0;"><img
+                        src="../img/senior-vip-icon.png" alt=""> 加入高级会员获得助教答疑</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="submit-question btn btn-primary" data-dismiss="modal">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="start-newlab">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>开始新实验</h3>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p> 一个实验正在进行，是否停止它，开始新实验？</p>
+
+            </div>
+            <div class="modal-footer" style="margin-top:0px">
+
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                <a class="btn btn-primary start-newlab-confirm">确定</a>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="start-evaluation-course">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>开始评估课实验</h3>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <p>为了让评估结果更加准确，请注意以下操作：</p>
+                    <ul>
+                        <li>完成实验后点击「停止实验」按钮</li>
+                        <li>将代码提交到代码库</li>
+                        <li>尽可能详尽的撰写实验报告</li>
+                        <li>尽可能在实验操作的关键步骤截图</li>
+                        <li>尽可能减少无用操作</li>
+                        <li>尽可能高效的利用内存/CPU资源</li>
+                    </ul>
+                    <p>评估课还在不断完善中，我们真挚希望你能通过我们提供的这个平台，找到更好的发展机会。</p>
+                </div>
+                <br>
+                <div class="start-newlab"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                <a class="btn btn-primary start-confirm">确定</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="vip-startlab-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>开始实验</h3>
+            </div>
+            <div class="modal-body">
+                <div class="start-newlab"></div>
+                <br>
+                <div class="text-center vip-vm">
+                    <a class="btn btn-default btn-lg newvm">创建新环境</a>
+
+                </div>
+                <br>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="bean-course-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">激活项目课：Linux 基础入门（新版）</h4>
+            </div>
+            <div class="modal-body">
+                <div style="font-size:14px; font-weight:thin;">
+                    要在实验楼愉快地学习，先要熟练地使用 Linux，本实验介绍 Linux 基本操作，shell 环境下的常用命令。
+                </div>
+                <div style="margin:36px 0 18px; font-size:16px; font-weight:bold;">
+                    您有 <span style="color:#f66;"><strong></strong></span> 个实验豆，激活本课程需要消耗 <span
+                        style="color:#f66;"><strong>0</strong></span> 个实验豆！
+                </div>
+                <div style="color:#84B61A; font-size:14px; font-weight:bold;">激活后可不限次数学习本课。<a href="/faq#shiyandou"
+                                                                                              style="font-weight:normal;"
+                                                                                              target="_blank">如何获得实验豆？</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+                <a class="btn btn-primary getshiyandou" href="/faq#shiyandou" target="_blank"
+                   data-dismiss="modal">获取实验豆</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="charge-course-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title">课程报名</h4>
+            </div>
+            <div class="modal-body">
+                <form class="row form-horizontal">
+                    <input name="_csrf_token" type=hidden value="1483794941##be4fb68b276c5f7cb970936cb25985cd53b943d1">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">邮箱</label>
+                        <div class="col-md-10">
+                            <input type="email" class="form-control" name="email" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">手机号码</label>
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="phone_no">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default charge-course-phone-code" type="button"
+                                            style="padding:7px 12px;">获取验证码</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">验证码</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="verify_code">
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary charge-course-confirm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="paid-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="text-align:center;">支付确认</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary paid-confirm" type="button">支付成功</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary paid-method" type="button" style="background:none; color:#0c9">
+                            选择支付方式
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#signin-form" aria-controls="signin-form" role="tab" data-toggle="tab">登录</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#signup-form" aria-controls="signup-form" role="tab" data-toggle="tab">注册</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="signin-form">
+                        <form action="/login" method="post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-envelope" style="margin:0;"></i>
+                                    </div>
+                                    <input type="email" name="login" class="form-control" placeholder="请输入邮箱">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-lock" style="margin:0;"></i>
+                                    </div>
+                                    <input type="password" name="password" class="form-control" placeholder="请输入密码">
+                                </div>
+                            </div>
+
+                            <div class="form-group remember-login">
+                                <input name="remember" type="checkbox" value="y"> 下次自动登录
+                                <a class="pull-right" href="#">忘记密码？</a>
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary" name="submit" type="submit" value="登陆">
+                            </div>
+                            <div class="form-group error-msg">
+                                <div class="alert alert-danger" role="alert"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="signup-form">
+                        <form action="/register" method="post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-envelope" style="margin:0;"></i>
+                                    </div>
+                                    <input type="email" name="email" class="form-control" placeholder="请输入邮箱">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-lock" style="margin:0;"></i>
+                                    </div>
+                                    <input type="password" name="password" class="form-control" placeholder="请输入密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary" name="submit" type="submit" value="注册">
+                            </div>
+                            <div class="form-group agree-privacy">
+                                注册表示您已经同意我们的<a href="#" target="_blank">隐私条款</a>
+                            </div>
+                            <div class="form-group error-msg">
+                                <div class="alert alert-danger" role="alert"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="base-data"
+
+
+     data-flash="false"
+
+
+     data-is-login=false
+
+     data-is-jwt=true
+     data-socket-url="wss://comet.shiyanlou.com"
+     data-msg-user=""
+     data-msg-system=""
+></div>
+
+<script src="../app/dest/lib/lib.js?=2016121272249"></script>
+<script src="../static/jquery/2.2.4/jquery.min.js"></script>
+<script src="../static/ace/1.2.5/ace.js"></script>
+<script src="../static/aliyun/aliyun-oss-sdk-4.3.0.min.js"></script>
+<script src="../static/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="../static/jspdf/1.2.61/jspdf.min.js"></script>
+<script src="../static/plupload/2.1.9/js/plupload.full.min.js"></script>
+<script src="../static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+<script src="../static/videojs/video.min.js"></script>
+<script src="../static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
+<script src="../static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+<script src="../static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="../static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
+<script src="../static/ravenjs/3.7.0/raven.min.js"></script>
+<script>
+    Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
+        release: '3.12.13'
+    }).install();
+</script>
+
+
+<div id="jinja-data"
+     data-userlab-id=""
+     data-course-id="1"
+     data-is-authenticated="false"
+     data-user-joined="false"
+     data-user-logined="false"
+     data-show-student-info-modal="false"
+     data-login-url="/login?next=%2Fcourses%2F1"
+     data-start-newlab-url="/courses/clear"
+
+     data-faq="/faq"
+     data-comment-post="/courses/1/comments"
+     data-loginurl="/login?next=%2Fcourses%2F1"
+     data-site-type="0"
+     data-report-post="/courses/1/reports"
+     data-recomment-img="../img/recommentReport.png"
+     data-charge-course-phone-code="/user/sms/code"
+     data-join-private-course="/courses/join"
+     data-current-user-id=""
+     data-vip-icon="../img/vip-icon.png"
+     data-vip-index="/vip"
+     data-get-question-url="/courses/1/questions"
+     data-real-price=""
+
+     data-query-bill="/purchase/bill/query"
+     data-question-form="/questions/meta"
+     data-qiniu-token-url="/api/qiniu/token"
+></div>
+<script src="../app/dest/course/labs.js?=2016121272249"></script>
+
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 clearfix footer-col">
+                <img src="../img/logo.gif">
+                <div class="footer-slogan">虚拟仿真在线实验教学平台</div>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-2 footer-col">
+                <div class="col-title">我们</div>
+                <a href="#" target="_blank">关于我们</a><br>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-2 footer-col">
+                <div class="col-title">反馈</div>
+                <a href="#" target="_blank">问题反馈</a><br>
+            </div>
+        </div>
+    </div>
+    <div class="text-center copyright">
+        <span>Copyright @2018 NUC虚拟仿真在线实验平台</span>
+    </div>
+</div>
+
+
+</body>
+</html>

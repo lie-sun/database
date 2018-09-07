@@ -1,0 +1,36 @@
+.shiyan-container{
+
+}
+
+.shiyan-container>h3{
+    text-align: center;
+    font-size: 18px;
+}
+.shiyanbuzhou>h5,.shiyansikao>h5,.shiyanmudi>h5,.shiyanneirong>h5{
+    font-weight: 600;
+}
+.shiyanbuzhou>p,.shiyanneirong>p,.shiyanmudi>p,.shiyansikao>p{
+    margin-left: 28px;
+}
+.img-con{
+    width: 100%;
+    margin: 15px 0 ;
+}
+.f-left{
+    width: 49%;
+    display: inline-block;
+}
+.imgs{
+    width: 330px;
+    display: block;
+    margin: auto;
+}
+.img-con p{
+    margin-top: 15px;
+    text-align: center;
+}
+.imgs-bg{
+    display: block;
+    margin: auto;
+   width: 80%;
+}

@@ -1,0 +1,32 @@
+.dcontainers{
+
+}
+h4{
+    text-align: center;
+    font-weight: 600;
+}
+.shiyanmudi h5,.shiyanneirong h5,.shiyanyaoqiu h5,.shiyanbuzhou h5{
+    font-weight: 600;
+    margin: 15px 0;
+}
+.shiyanmudi p,.shiyanneirong p,.shiyanyaoqiu p{
+    margin-left: 22px;
+}
+.shiyanbuzhou p{
+    margin-left: 25px;
+}
+.shiyanbuzhou h6{
+    font-weight: 600;
+    margin-left: 18px;
+}
+table,td{
+    border: 1px solid #e2e2e2;
+}
+table{
+    border-collapse:collapse;
+}
+td{
+    width: 120px;
+    padding-left: 10px;
+    line-height: 30px;
+}
