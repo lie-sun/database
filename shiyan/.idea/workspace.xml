@@ -14,20 +14,59 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="thirddatabaseexperiment.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/databaseexperiment/thirddatabaseexperiment.html">
+      <file leaf-file-name="firstdatabaseexperiment.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/databaseexperiment/firstdatabaseexperiment.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="237" column="45" selection-start-line="237" selection-start-column="45" selection-end-line="237" selection-end-column="45" />
+            <state relative-caret-position="4368">
+              <caret line="237" selection-start-line="237" selection-end-line="237" />
+              <folding>
+                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="thirdthsql.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/databaseexperiment/js/thirdthsql.js">
+      <file leaf-file-name="firstsql.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/databaseexperiment/js/firstsql.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="82" column="32" selection-start-line="82" selection-start-column="32" selection-end-line="82" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dosql1.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/databaseexperiment/css/dosql1.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1218">
+              <caret line="58" column="1" selection-start-line="49" selection-end-line="58" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/databaseexperiment/css/common.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
-              <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+              <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="thirddatabaseexperiment.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/databaseexperiment/thirddatabaseexperiment.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5817">
+              <caret line="277" column="32" selection-start-line="237" selection-start-column="24" selection-end-line="277" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="thirdthsql.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/databaseexperiment/js/thirdthsql.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -37,8 +76,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -60,7 +99,6 @@
         <option value="$PROJECT_DIR$/databasedocs/fourthdatabasedocument.html" />
         <option value="$PROJECT_DIR$/databasedocs/fifthdatabasedocument.html" />
         <option value="$PROJECT_DIR$/databasedocs/sixthdatabasedocument.html" />
-        <option value="$PROJECT_DIR$/databaseexperiment/firstdatabaseexperiment.html" />
         <option value="$PROJECT_DIR$/databaseexperiment/seconddatabaseexperiment.html" />
         <option value="$PROJECT_DIR$/databaseexperiment/sixthdatabaseexperiment.html" />
         <option value="$PROJECT_DIR$/databaseexperiment/fourthdatabaseexperiment.html" />
@@ -68,6 +106,9 @@
         <option value="$PROJECT_DIR$/courses/databaseshow.html" />
         <option value="$PROJECT_DIR$/databaseexperiment/thirddatabaseexperiment.html" />
         <option value="$PROJECT_DIR$/databaseexperiment/js/thirdthsql.js" />
+        <option value="$PROJECT_DIR$/databaseexperiment/firstdatabaseexperiment.html" />
+        <option value="$PROJECT_DIR$/databaseexperiment/css/common.css" />
+        <option value="$PROJECT_DIR$/databaseexperiment/js/firstsql.js" />
       </list>
     </option>
   </component>
@@ -113,7 +154,7 @@
               <item name="shiyan" type="b2602c69:ProjectViewProjectNode" />
               <item name="shiyan" type="462c0819:PsiDirectoryNode" />
               <item name="databaseexperiment" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -127,7 +168,7 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.HTML" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -161,20 +202,25 @@
       <workItem from="1536071328862" duration="4902000" />
       <workItem from="1536152175303" duration="7351000" />
       <workItem from="1536242628727" duration="9008000" />
+      <workItem from="1536471947647" duration="2890000" />
+      <workItem from="1536583904040" duration="6909000" />
+      <workItem from="1536676424318" duration="1564000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21261000" />
+    <option name="totallyTimeSpent" value="32624000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1500732" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2602118" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -185,9 +231,9 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +243,75 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/firstdatabaseexperiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4977">
+          <caret line="237" selection-start-line="237" selection-end-line="237" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/css/dosql1.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1218">
+          <caret line="58" column="1" lean-forward="true" selection-start-line="49" selection-end-line="58" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/css/common.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/thirddatabaseexperiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5817">
+          <caret line="277" column="32" lean-forward="true" selection-start-line="237" selection-start-column="24" selection-end-line="277" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/js/thirdthsql.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/js/firstsql.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="861">
+          <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/firstdatabaseexperiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3857">
+          <caret line="203" column="28" lean-forward="true" selection-start-line="203" selection-start-column="28" selection-end-line="233" selection-end-column="26" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/thirddatabaseexperiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4977">
+          <caret line="237" column="45" selection-start-line="237" selection-start-column="45" selection-end-line="237" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/js/thirdthsql.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3948">
@@ -215,11 +330,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3633">
           <caret line="173" column="26" selection-start-line="173" selection-start-column="26" selection-end-line="173" selection-end-column="26" />
-          <folding>
-            <element signature="e#6969#8722#0" />
-            <element signature="e#8796#11384#0" />
-            <element signature="e#11454#13169#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -248,9 +358,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3570">
           <caret line="170" column="13" lean-forward="true" selection-start-line="170" selection-start-column="13" selection-end-line="170" selection-end-column="13" />
-          <folding>
-            <element signature="e#14679#15911#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -293,9 +400,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8295">
           <caret line="395" column="32" selection-start-line="395" selection-start-column="32" selection-end-line="395" selection-end-column="32" />
-          <folding>
-            <element signature="e#14679#15911#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -349,11 +453,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/databaseexperiment/css/dosql1.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-62" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/courses/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="605">
@@ -368,16 +467,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/databaseexperiment/firstdatabaseexperiment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="235" column="27" lean-forward="true" selection-start-line="235" selection-start-column="27" selection-end-line="235" selection-end-column="27" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/databaseexperiment/sixthdatabaseexperiment.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -388,13 +477,6 @@
     <entry file="file://$PROJECT_DIR$/databaseexperiment/seconddatabaseexperiment.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
-          <caret line="185" column="26" selection-start-line="185" selection-start-column="26" selection-end-line="185" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/databaseexperiment/fourthdatabaseexperiment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
           <caret line="185" column="26" selection-start-line="185" selection-start-column="26" selection-end-line="185" selection-end-column="26" />
         </state>
       </provider>
@@ -424,9 +506,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="394" column="36" lean-forward="true" selection-start-line="354" selection-start-column="28" selection-end-line="394" selection-end-column="36" />
-          <folding>
-            <element signature="e#14679#15911#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -434,11 +513,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5792">
           <caret line="173" column="26" selection-start-line="173" selection-start-column="26" selection-end-line="173" selection-end-column="26" />
-          <folding>
-            <element signature="e#6969#8722#0" />
-            <element signature="e#8796#11384#0" />
-            <element signature="e#11454#13169#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -449,17 +523,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/databaseexperiment/thirddatabaseexperiment.html">
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/js/thirdthsql.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="237" column="45" selection-start-line="237" selection-start-column="45" selection-end-line="237" selection-end-column="45" />
+        <state relative-caret-position="84">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/databaseexperiment/js/thirdthsql.js">
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/thirddatabaseexperiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5817">
+          <caret line="277" column="32" selection-start-line="237" selection-start-column="24" selection-end-line="277" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/fourthdatabaseexperiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6468">
+          <caret line="185" column="26" selection-start-line="185" selection-start-column="26" selection-end-line="185" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/css/dosql1.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1218">
+          <caret line="58" column="1" selection-start-line="49" selection-end-line="58" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/firstdatabaseexperiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4368">
+          <caret line="237" selection-start-line="237" selection-end-line="237" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
-          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databaseexperiment/js/firstsql.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="82" column="32" selection-start-line="82" selection-start-column="32" selection-end-line="82" selection-end-column="32" />
         </state>
       </provider>
     </entry>
