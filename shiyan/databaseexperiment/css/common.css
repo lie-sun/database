@@ -17,3 +17,11 @@ h2{
     padding: 0;
     font-weight: 600;
 }
+.sm{
+    width: 15px;
+    height: 15px;
+}
+.jt{
+    margin-right: -5px;
+    cursor: pointer;
+}
