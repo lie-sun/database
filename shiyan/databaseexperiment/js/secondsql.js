@@ -75,13 +75,16 @@ function create(sql) {
 
             var createtablename = createtableresult[1];
             $(".rightss").append("<h2 class='" + createtablename + "'>表" + createtablename + "</h2>");
-            var str = "<table class='" + createtablename.toLowerCase() + "'><tr>";
+            var str = "<table class='" + createtablename.toLowerCase() + "'><thead><tr>";
             var createtableths = createtableresult.input;
             createtableths = createtableths.substring(createtableths.indexOf("(") + 1, createtableths.trim().lastIndexOf(")"));
             var thsArr = createtableths.split(",");
             var ths = [];
             for (var i = 0; i < thsArr.length; i++) {
                 var thsreg = /\s*(\w+)\s*/i;
+                if (/^primary/i.test(thsArr[i].trim()) || /^FOREIGN/i.test(thsArr[i].trim())) {
+                    continue;
+                }
                 var result = thsreg.exec(thsArr[i]);
 
                 var obj = {};
@@ -92,9 +95,7 @@ function create(sql) {
             str += "</tr></thead><tbody></tbody></table>";
             $(".rightss").append(str);
         }
-
     }
-
 }
 
 /**
@@ -105,7 +106,7 @@ function usedb(sql) {
     var usereg = /^use\s(\w+)/i;
     var useresult = usereg.exec(sql);
     if (useresult) {
-        var usename = useresult[useresult.length - 1];
+        var usename = useresult[1];
         $(".dbname").removeClass("active");
         $("." + usename).children("p").addClass("active").children(".jt").attr("src", "images/jt-b.png");
         dbName = usename;
@@ -122,19 +123,23 @@ function insert(sql) {
     var sqlarr = sql.split(";");
     for (var i = 0; i < sqlarr.length - 1; i++) {
         var result = insertreg.exec(sqlarr[i]);
-        var inserttablename = result[1];
+        var inserttablename = result[1].toLowerCase();
         var tharr = [];
         result = result.input.substring(result.input.lastIndexOf("(") + 1, result.input.lastIndexOf(")"));
         tharr = result.split(",");
-        console.log(tharr);
+
         var addth = "<tr>";
         for (var j = 0; j < tharr.length; j++) {
             addth += "<td>" + tharr[j].replace(/'|"/g, "") + "</td>";
 
         }
         addth += "</tr>";
-        console.log(addth);
-        $("." + inserttablename + " tbody").append(addth);
+        if ($("." + inserttablename).length==0) {
+            alert("暂无此表");
+        } else {
+            $("." + inserttablename + " tbody").append(addth);
+        }
+
     }
 
 
@@ -142,19 +147,24 @@ function insert(sql) {
 
 /**
  * 更新表数据
- * @param {*} sql 
+ * @param {*} sql
  */
 function update(sql) {
     var sql = sql.split(";"),
         updatetablereg = /update\s(\w+)\sset\s(\w+)\s=\s['|"]?(\w+)['|"]?\swhere\s(\w+)\s=\s['|"]?(\w+)['|"]?/i;
-    for (var i = 0; i < sql.length-1; i++) {
+    for (var i = 0; i < sql.length - 1; i++) {
         var result = updatetablereg.exec(sql[i].trim()),
-            tablename = result[1],
+            tablename = result[1].toLowerCase(),
             setname = result[2],
             setcon = result[3],
             tjname = result[4],
             tjcon = result[5];
-            console.log(result);
+
+        console.log($("table."+tablename+' thead tr th').text())
+        console.log(tjname)
+        if($("table."+tablename+' thead tr th').text()==tjname){
+            console.log($(this).index());
+        }
     }
 
 }

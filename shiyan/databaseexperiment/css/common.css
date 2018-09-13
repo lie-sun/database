@@ -25,3 +25,6 @@ h2{
     margin-right: -5px;
     cursor: pointer;
 }
+.active{
+    font-weight: 600;
+}
