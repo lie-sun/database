@@ -17,6 +17,11 @@ $(document).ready(function () {
              * 插入数据
              */
             insert(sql);
+        } else if (sql.indexOf("update") != -1) {
+            /**
+             * 更新表数据
+             */
+            update(sql);
         }
     });
 
@@ -124,7 +129,7 @@ function insert(sql) {
         console.log(tharr);
         var addth = "<tr>";
         for (var j = 0; j < tharr.length; j++) {
-            addth += "<td>" + tharr[j].replace(/'|"/g,"") + "</td>";
+            addth += "<td>" + tharr[j].replace(/'|"/g, "") + "</td>";
 
         }
         addth += "</tr>";
@@ -132,5 +137,24 @@ function insert(sql) {
         $("." + inserttablename + " tbody").append(addth);
     }
 
+
+}
+
+/**
+ * 更新表数据
+ * @param {*} sql 
+ */
+function update(sql) {
+    var sql = sql.split(";"),
+        updatetablereg = /update\s(\w+)\sset\s(\w+)\s=\s['|"]?(\w+)['|"]?\swhere\s(\w+)\s=\s['|"]?(\w+)['|"]?/i;
+    for (var i = 0; i < sql.length-1; i++) {
+        var result = updatetablereg.exec(sql[i].trim()),
+            tablename = result[1],
+            setname = result[2],
+            setcon = result[3],
+            tjname = result[4],
+            tjcon = result[5];
+            console.log(result);
+    }
 
 }
