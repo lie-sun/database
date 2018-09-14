@@ -1,0 +1,83 @@
+{
+    "库名1": {
+        "表名1": {
+            "title": ["title1", "title2", "title3"],
+            "data": [{
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                },
+                {
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                },
+                {
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                }
+            ]
+        },
+        "表名2": {
+            "title": ["title1", "title2", "title3"],
+            "data": [{
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                },
+                {
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                },
+                {
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                }
+            ]
+        }
+    },
+    "库名2": {
+        "表名1": {
+            "title": ["title1", "title2", "title3"],
+            "data": [{
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                },
+                {
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                },
+                {
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                }
+            ]
+        },
+        "表名2": {
+            "title": ["title1", "title2", "title3"],
+            "data": [{
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                },
+                {
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                },
+                {
+                    "title1": "AAA",
+                    "title2": "BBB",
+                    "title3": "CCC"
+                }
+            ]
+        }
+    }
+
+}
