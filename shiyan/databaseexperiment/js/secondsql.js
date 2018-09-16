@@ -5,27 +5,33 @@ $(document).ready(function () {
 
     $("#do").on("click", function () {
         //sql语句
-        var sql = $(".CodeMirror-line ").text().trim().replace(/\s+/g, ' ');
-        if (sql.indexOf("create") != -1) {
+        var sql = $(".CodeMirror-line ").text().trim().replace(/\s+/g, ' '),
+            newsql = sql.toLowerCase();
+        if (newsql.indexOf("create") != -1) {
             /**
              * 创建数据库、表
              */
             create(sql);
-        } else if (sql.indexOf('use') != -1) {
+        } else if (newsql.indexOf('use') != -1) {
             /**
              * 使用数据库
              */
             usedb(sql);
-        } else if (sql.indexOf("insert") != -1) {
+        } else if (newsql.indexOf("insert") != -1) {
             /**
              * 插入数据
              */
             insert(sql);
-        } else if (sql.indexOf("update") != -1) {
+        } else if (newsql.indexOf("update") != -1) {
             /**
              * 更新表数据
              */
             update(sql);
+        } else if (newsql.indexOf("select") != -1) {
+            /**
+             * 查询数据
+             */
+            select(sql);
         }
     });
 
@@ -159,4 +165,36 @@ $(document).ready(function () {
 
     }
 
+    /**
+     * 查询语句
+     * @param sql
+     */
+    function select(sql) {
+        var selectsql = sql.toLowerCase(),
+            selectIndex = selectsql.indexOf('select') + 7,
+            fromIndex = selectsql.indexOf('from'),
+            whereIndex = selectsql.indexOf("where"),
+            selectCon = sql.slice(selectIndex, fromIndex).trim(),
+            fromCon = "",
+            whereCon = "";
+        if (whereIndex != -1) {
+            fromCon = sql.slice(fromIndex + 5, whereIndex);
+            whereCon = sql.slice(whereIndex + 6).trim();
+            var newwherecon = whereCon.toLowerCase().trim();
+            if(newwherecon.indexOf('and')!=-1){
+                alert(1);
+            }
+        }else{
+            fromCon = sql.slice(fromIndex + 5);
+        }
+
+        //查询的内容
+        var selectContent = selectCon.split(",");
+
+        console.log(selectCon);
+        console.log(fromCon);
+        console.log(whereCon);
+        console.log(selectContent);
+        console.log('****************');
+    }
 });
