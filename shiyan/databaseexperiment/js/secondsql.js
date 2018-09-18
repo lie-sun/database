@@ -1,7 +1,8 @@
 $(document).ready(function () {
     var useDb = '',
         tables = [],
-        dbs = {};
+        dbs = {},
+        wheretables = {};
 
     $("#do").on("click", function () {
         //sql语句
@@ -122,10 +123,10 @@ $(document).ready(function () {
         for (var i = 0; i < sqlarr.length - 1; i++) {
             var result = insertreg.exec(sqlarr[i]);
             var inserttablename = result[1].toLowerCase();
-            // if(!dbs[useDb].hasOwnProperty(inserttablename)){
-            //     alert("此表不存在");
-            //     return false;
-            // }
+            if (!dbs[useDb].hasOwnProperty(inserttablename)) {
+                alert("此表不存在");
+                return false;
+            }
             result = result.input.substring(result.input.lastIndexOf("(") + 1, result.input.lastIndexOf(")"));
             var tharr = result.split(",");
 
@@ -170,6 +171,10 @@ $(document).ready(function () {
      * @param sql
      */
     function select(sql) {
+        // if (!useDb) {
+        //     alert("请先使用数据库");
+        //     return false;
+        // }
         var selectsql = sql.toLowerCase(),
             selectIndex = selectsql.indexOf('select') + 7,
             fromIndex = selectsql.indexOf('from'),
@@ -177,24 +182,36 @@ $(document).ready(function () {
             selectCon = sql.slice(selectIndex, fromIndex).trim(),
             fromCon = "",
             whereCon = "";
+        //存在条件查询
         if (whereIndex != -1) {
-            fromCon = sql.slice(fromIndex + 5, whereIndex);
+            fromCon = sql.slice(fromIndex + 5, whereIndex).trim();
             whereCon = sql.slice(whereIndex + 6).trim();
-            var newwherecon = whereCon.toLowerCase().trim();
-            if(newwherecon.indexOf('and')!=-1){
+            if (whereCon.toLowerCase().trim().indexOf('and') != -1) {
+                //存在多条件查询
                 alert(1);
+            } else {
+                //单条件查询
+                if (fromCon.indexOf(",") != -1) {
+                    var fromContent = fromCon.split(",");
+                    for (let i = 0; i < fromContent.length; i++) {
+                        //判断有没有别名
+                        if (/\s|\sas\s/i.test(fromContent[i].trim())) {
+                            //有别名
+                            var hasOtherNameReg = /(\w+)\s(as)?\s?(\w+)/i;
+                            var result = hasOtherNameReg.exec(fromContent[i].trim());
+                            wheretables[result[3]] = dbs[useDb][result[1].toLowerCase()];
+                            console.log(wheretables);
+                        } else {
+                            console.log(fromContent[i].trim());
+                            console.log("无")
+                        }
+                    }
+                }
             }
-        }else{
+        } else {
+            //不存在where
             fromCon = sql.slice(fromIndex + 5);
+            console.log(fromCon);
         }
-
-        //查询的内容
-        var selectContent = selectCon.split(",");
-
-        console.log(selectCon);
-        console.log(fromCon);
-        console.log(whereCon);
-        console.log(selectContent);
-        console.log('****************');
     }
 });
