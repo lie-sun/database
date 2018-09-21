@@ -235,8 +235,38 @@ $(document).ready(function () {
             }
         } else {
             //不存在where
-            fromCon = sql.slice(fromIndex + 5);
+            fromCon = sql.slice(fromIndex + 5).toLowerCase();
             console.log(fromCon);
+            var fromReg = /\s|,|as/i;
+            if (!fromReg.exec(fromCon)) {
+                //单表查询
+                if (selectCon == '*') {
+                    //select * from 表
+                    var datas = dbs[useDb][fromCon].data, titles = dbs[useDb][fromCon].title,
+                        str = "<table><thead><tr>";
+
+                    for (var ii = 0; ii < titles.length; ii++) {
+                        str += "<th>" + titles[ii] + "</th>";
+                    }
+                    str += "</thead><tbody>";
+                    for (var i = 0; i < datas.length; i++) {
+                        str += "<tr>";
+                        for (var j = 0; j < titles.length; j++) {
+                            str += "<td>" + datas[i][titles[j]] + "</td>";
+                        }
+                        str += "</tr>";
+                    }
+                    str += "</tbody></table>";
+                    $(".tbs-con").html(str);
+                } else if (selectCon.indexOf("*") != -1) {
+                    //包括*
+                } else {
+
+                }
+            } else {
+                console.log("***")
+            }
+
         }
     }
 });

@@ -40,6 +40,11 @@ $(document).ready(function () {
              * 删除表
              */
             drop(sql);
+        } else if (newsql.indexOf("alter") != -1) {
+            /**
+             * 修改表
+             */
+            alter(sql);
         }
     });
 
@@ -89,19 +94,55 @@ $(document).ready(function () {
                 createtableths = createtableths.substring(createtableths.indexOf("(") + 1, createtableths.trim().lastIndexOf(")"));
                 var thsArr = createtableths.split(",");
 
-                var titles = [];
+                var titles = [], types = [];
                 for (var i = 0; i < thsArr.length; i++) {
                     var thsreg = /\s*(\w+)\s*/i;
                     if (/^primary/i.test(thsArr[i].trim()) || /^FOREIGN/i.test(thsArr[i].trim())) {
                         continue;
                     }
                     var result = thsreg.exec(thsArr[i]);
+                    types.push(result.input.trim().substr(result[1].length + 1).trim());
                     titles.push(result[1]);
                 }
                 var obj = {};
                 obj.title = titles;
+                obj.type = types;
                 obj.data = [];
                 dbs[useDb][createtablename] = obj;
+                console.log(dbs);
+            }
+        }
+    }
+
+    /**
+     * 修改表数据
+     * @param sql
+     */
+    function alter(sql) {
+        /**
+         * 修改表数据
+         */
+        if (!useDb) {
+            useDb = "sct";
+        }
+        var alterTableReg = /alter\stable\s(\w+)\sadd\s(\w+)\s(\w+)/i;
+        var alterTableResult = alterTableReg.exec(sql);
+        if (alterTableResult) {
+            var alterTableName = alterTableResult[1].toLowerCase(),
+                thName = alterTableResult[2],
+                thType = alterTableResult[3];
+            dbs[useDb][alterTableName]['title'].push(thName);
+            dbs[useDb][alterTableName]['type'].push(thType);
+            console.log(dbs);
+        } else {
+            var alterTableAReg = /alter\stable\s(\w+)\salter\scolumn\s(\w+)\s(\w+)/i;
+            var alterTableAResult = alterTableAReg.exec(sql);
+            if (alterTableAResult) {
+                var alterTableRName = alterTableAResult[1].toLowerCase(),
+                    thRName = alterTableAResult[2],
+                    thRType = alterTableAResult[3];
+                var indexs = dbs[useDb][alterTableRName]['title'].indexOf(thRName);
+                dbs[useDb][alterTableRName]['type'][indexs] = thRType;
                 console.log(dbs);
             }
         }
@@ -239,8 +280,43 @@ $(document).ready(function () {
             }
         } else {
             //不存在where
-            fromCon = sql.slice(fromIndex + 5);
+            fromCon = sql.slice(fromIndex + 5).toLowerCase();
             console.log(fromCon);
+            var fromReg = /\s|,|as/i;
+            if (!fromReg.exec(fromCon)) {
+                //单表查询
+                if (selectCon == '*') {
+                    //select * from 表
+                    var datas = dbs[useDb][fromCon].data, titles = dbs[useDb][fromCon].title,
+                        str = "<table><thead><tr>";
+
+                    for (var ii = 0; ii < titles.length; ii++) {
+                        str += "<th>" + titles[ii] + "</th>";
+                    }
+                    str += "</thead><tbody>";
+                    for (var i = 0; i < datas.length; i++) {
+                        str += "<tr>";
+                        for (var j = 0; j < titles.length; j++) {
+                            str += "<td>" + datas[i][titles[j]] + "</td>";
+                        }
+                        str += "</tr>";
+                    }
+                    str += "</tbody></table>";
+                    $(".tbs-con").html(str);
+                }
+
+            } else if (selectCon.indexOf("*") != -1) {
+                //包括*
+            } else {
+
+            }
         }
+    else
+        {
+            console.log("***")
+        }
+
     }
-});
+}
+})
+;
