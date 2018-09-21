@@ -33,6 +33,11 @@ $(document).ready(function () {
              * 查询数据
              */
             select(sql);
+        } else if (newsql.indexOf("drop") != -1) {
+            /**
+             * 删除表
+             */
+            drop(sql);
         }
     });
 
@@ -97,6 +102,24 @@ $(document).ready(function () {
                 console.log(dbs);
             }
         }
+    }
+
+    /**
+     * 删除表
+     * @param sql
+     */
+    function drop(sql) {
+        /**
+         * 删除表
+         */
+        if (!useDb) {
+            alert("暂未使用数据库");
+            return false;
+        }
+        var dropTableReg = /drop\stable\s(\w+)/i,
+            dropTableResult = dropTableReg.exec(sql);
+        console.log(dropTableResult);
+
     }
 
     /**
@@ -190,7 +213,7 @@ $(document).ready(function () {
                 //存在多条件查询
                 alert(1);
             } else {
-                //单条件查询
+                //单条件查询 通过,分割
                 if (fromCon.indexOf(",") != -1) {
                     var fromContent = fromCon.split(",");
                     for (let i = 0; i < fromContent.length; i++) {
@@ -206,6 +229,8 @@ $(document).ready(function () {
                             console.log("无")
                         }
                     }
+                    //进行数据查询
+
                 }
             }
         } else {
