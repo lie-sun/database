@@ -86,20 +86,21 @@ $(document).ready(function () {
                 createtableths = createtableths.substring(createtableths.indexOf("(") + 1, createtableths.trim().lastIndexOf(")"));
                 var thsArr = createtableths.split(",");
 
-                var titles = [];
+                var titles = [], types = [];
                 for (var i = 0; i < thsArr.length; i++) {
                     var thsreg = /\s*(\w+)\s*/i;
                     if (/^primary/i.test(thsArr[i].trim()) || /^FOREIGN/i.test(thsArr[i].trim())) {
                         continue;
                     }
                     var result = thsreg.exec(thsArr[i]);
+                    types.push(result.input.trim().substr(result[1].length + 1).trim());
                     titles.push(result[1]);
                 }
                 var obj = {};
                 obj.title = titles;
+                obj.type = types;
                 obj.data = [];
                 dbs[useDb][createtablename] = obj;
-                console.log(dbs);
             }
         }
     }
