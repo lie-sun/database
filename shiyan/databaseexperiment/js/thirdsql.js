@@ -37,6 +37,9 @@ $(document).ready(function () {
                 },
                 sc: {
                     title: ['Sno', 'Cno', "Grade"],
+                    data: [
+                        {}
+                    ]
 
                 }
             }
@@ -58,6 +61,8 @@ $(document).ready(function () {
      * @param sql
      */
     function deletes(sql) {
+        console.log(dbs);
+        return false;
         var deleteTableReg = /delete\sfrom\s(\w+)/i,
             deleteTableResult = deleteTableReg.exec(sql);
         if (deleteTableResult) {
@@ -65,10 +70,16 @@ $(document).ready(function () {
             let deteTableName = deleteTableResult[1].toLowerCase(),
                 deleteCon = deleteTableResult.input,
                 deleteContoLowerCase = deleteCon.toLowerCase(),
-                deleteWhere = deleteContoLowerCase.substr(deleteContoLowerCase.indexOf("where") + 5).trim().replace(/'|"/g,""),
+                deleteWhere = deleteCon.substr(deleteContoLowerCase.indexOf("where") + 5).trim().replace(/'|"/g, ""),
                 deleteWhereArr = deleteWhere.split("=");
 
-            console.log(deleteWhereArr);
+            var data = dbs[useDb][deteTableName].data;
+            for (let i = 0; i < data.length; i++) {
+                if (data[i][deleteWhereArr[0]] == deleteWhereArr[1]) {
+                    dbs[useDb][deteTableName].data.splice(i, 1);
+                }
+            }
+            console.log(dbs)
 
         }
     }
