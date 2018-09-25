@@ -45,6 +45,9 @@ $(document).ready(function () {
             }
         };
 
+
+    showMsg('student');
+
     $("#do").on("click", function () {
         //sql语句
         var sql = $(".CodeMirror-line ").text().trim().replace(/\s+/g, ' '),
@@ -53,6 +56,8 @@ $(document).ready(function () {
             deletes(sql);
         } else if (newsql.indexOf("insert") != -1) {
             insert(sql);
+        } else if (newsql.indexOf("update") != -1) {
+            update(sql);
         }
     });
 
@@ -61,12 +66,9 @@ $(document).ready(function () {
      * @param sql
      */
     function deletes(sql) {
-        console.log(dbs);
-        return false;
         var deleteTableReg = /delete\sfrom\s(\w+)/i,
             deleteTableResult = deleteTableReg.exec(sql);
         if (deleteTableResult) {
-            console.log(deleteTableResult);
             let deteTableName = deleteTableResult[1].toLowerCase(),
                 deleteCon = deleteTableResult.input,
                 deleteContoLowerCase = deleteCon.toLowerCase(),
@@ -90,6 +92,38 @@ $(document).ready(function () {
      */
     function insert(sql) {
 
+    }
+
+    /**
+     * 更新数据
+     * @param sql
+     */
+    function update(sql) {
+
+    }
+
+    function showMsg(tableName) {
+        if (!tableName) {
+            alert("请表名不正确");
+            return false;
+        }
+        var tablemsg = dbs[useDb][tableName],
+            data = tablemsg.data,
+            title = tablemsg.title;
+        var str = "<table><thead><tr>";
+        for (var z = 0; z < title.length; z++) {
+            str += "<th>" + title[z] + "</th>"
+        }
+        str += "</tr></thead><tbody>";
+        for (var i = 0; i < data.length; i++) {
+            str += "<tr>";
+            for (var j = 0; j < title.length; j++) {
+                str +="<td>"+data[i][title[j]]+"</td>"
+            }
+            str += "</tr>";
+        }
+        str += "</tbody></table>";
+        $(".rightss").html(str);
     }
 
 });
