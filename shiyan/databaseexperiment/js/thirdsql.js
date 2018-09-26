@@ -35,18 +35,23 @@ $(document).ready(function () {
                         },
                     ]
                 },
+
                 sc: {
                     title: ['Sno', 'Cno', "Grade"],
                     data: [
-                        {}
+                        {Sno: 200215121, Cno: 1, Grade: 92},
+                        {Sno: 200215121, Cno: 2, Grade: 85},
+                        {Sno: 200215121, Cno: 3, Grade: 85},
+                        {Sno: 200215122, Cno: 2, Grade: 90},
+                        {Sno: 200215122, Cno: 3, Grade: 80},
                     ]
 
                 }
             }
         };
 
-
     showMsg('student');
+    showMsg('sc');
 
     $("#do").on("click", function () {
         //sql语句
@@ -74,15 +79,13 @@ $(document).ready(function () {
                 deleteContoLowerCase = deleteCon.toLowerCase(),
                 deleteWhere = deleteCon.substr(deleteContoLowerCase.indexOf("where") + 5).trim().replace(/'|"/g, ""),
                 deleteWhereArr = deleteWhere.split("=");
-
             var data = dbs[useDb][deteTableName].data;
             for (let i = 0; i < data.length; i++) {
                 if (data[i][deleteWhereArr[0]] == deleteWhereArr[1]) {
                     dbs[useDb][deteTableName].data.splice(i, 1);
                 }
             }
-            console.log(dbs)
-
+            showMsg(deteTableName);
         }
     }
 
@@ -92,15 +95,82 @@ $(document).ready(function () {
      */
     function insert(sql) {
 
+        var insertTableReg = /insert\sinto\s(\w+)/i,
+            insertResult = insertTableReg.exec(sql);
+        if (insertResult) {
+            var insertName = insertResult[1].toLowerCase(),
+                insertStr = insertResult.input,
+                insertStrTolowerCase = insertResult.input.toLowerCase(),
+                thStr = insertStr.substring(insertStrTolowerCase.indexOf("into") + 4, insertStrTolowerCase.indexOf("values")),
+                newthStr = thStr.substring(thStr.indexOf("(") + 1, thStr.indexOf(")")),
+                valueStr = insertStr.substring(insertStrTolowerCase.indexOf("values") + 6).replace(/'|"/g, '').replace(/\(|\)/g, ''),
+                addThArr = dbs[useDb][insertName].title,
+                addValArr = valueStr.split(",");
+            console.log(valueStr);
+            var obj = {};
+            for (var j = 0; j < addThArr.length; j++) {
+                if (!addValArr[j]) {
+                    obj[addThArr[j]] = "";
+                } else {
+                    obj[addThArr[j]] = addValArr[j].trim();
+                }
+
+            }
+            dbs[useDb][insertName].data.push(obj);
+            showMsg(insertName);
+            console.log(dbs);
+
+
+        }
     }
 
     /**
-     * 更新数据
-     * @param sql
+     * 更新表数据
+     * @param {*} sql
      */
     function update(sql) {
+        var updatetablereg = /update\s(\w+)/i;
+        var result = updatetablereg.exec(sql),
+            tablename = result[1].toLowerCase(),
+            updateStr = result.input.replace(/'|"/g, ''),
+            updateStrToLowerCase = result.input.toLowerCase().trim(),
+            datas = dbs[useDb][tablename].data,
+            whereStr = updateStr.substring(updateStrToLowerCase.indexOf("where") + 5).trim(),
+            setStr = updateStr.substring(updateStrToLowerCase.indexOf('set') + 3, updateStrToLowerCase.indexOf('where')).trim(),
+            tjname = whereStr.split('=')[0].trim(),
+            tjcon = whereStr.split('=')[1].trim(),
+            setname = setStr.split('=')[0].trim(),
+            setcon = setStr.split('=')[1].trim();
+        if (setcon.indexOf("+") != -1) {
+            var setconname = setcon.split("+")[0].trim(),
+                setconnum = setcon.split("+")[1].trim();
+            for (var i = 0; i < datas.length; i++) {
+                if (datas[i][tjname] == tjcon) {
+                    dbs[useDb][tablename]['data'][i][setname] = parseInt(dbs[useDb][tablename]['data'][i][setconname]) + parseInt(setconnum);
+                }
+            }
+            showMsg(tablename);
 
+        } else {
+            if (dbs[useDb][tablename]['title'].indexOf(setcon) != -1) {
+                for (var ii = 0; ii < datas.length; ii++) {
+                    if (datas[i][tjname] == tjcon) {
+                        dbs[useDb][tablename]['data'][ii][setname] = dbs[useDb][tablename]['data'][ii][setcon];
+                    }
+                }
+                showMsg(tablename);
+            } else {
+                for (var iii = 0; iii < datas.length; iii++) {
+                    if (datas[iii][tjname] == tjcon) {
+                        dbs[useDb][tablename]['data'][iii][setname] = setcon;
+                    }
+                }
+                console.log(dbs);
+                showMsg(tablename);
+            }
+        }
     }
+
 
     function showMsg(tableName) {
         if (!tableName) {
@@ -118,12 +188,13 @@ $(document).ready(function () {
         for (var i = 0; i < data.length; i++) {
             str += "<tr>";
             for (var j = 0; j < title.length; j++) {
-                str +="<td>"+data[i][title[j]]+"</td>"
+                var addData = data[i][title[j]] ? data[i][title[j]] : "";
+                str += "<td>" + addData + "</td>"
             }
             str += "</tr>";
         }
         str += "</tbody></table>";
-        $(".rightss").html(str);
+        $("." + tableName).html(str);
     }
 
 });
