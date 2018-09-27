@@ -212,13 +212,13 @@
                             <p>例如：建立信息系学生的视图。</p>
                             <pre>    CREATE VIEW IS_Student
     AS
-    SELECT Sno，Sname，Sage
+    SELECT Sno,Sname,Sage
     FROM    Student
     WHERE  Sdept= 'IS'</pre>
                             <p>(2)利用视图完成表的查询</p>
                             <p>例如：查询信息系选修了1号课程的学生</p>
-                            <pre>    SELECT  Sno，Sname
-    FROM     IS_Student，SC
+                            <pre>    SELECT  Sno,Sname
+    FROM     IS_Student,SC
     WHERE  IS_Student.Sno =SC.Sno AND
     SC.Cno= '1'</pre>
                             <p>建立信息系选修了1号课程且成绩在88分以上的学生的视图。</p>
@@ -243,7 +243,7 @@
     SELECT Sno, AVG(Grade)
     FROM SC
     GROUP BY Sno;</pre>
-                            <p>（4）向信息系学生视图IS_Student中插入一个新的学生元组，其中学号为200215185，姓名为周捷轮，性别为男，年龄为23岁。</p>
+                            <p>（4）向信息系学生视图IS_Student中插入一个新的学生元组,其中学号为200215185,姓名为周捷轮,性别为男,年龄为23岁。</p>
                             <pre>    INSERT
     INTO IS_Student
     VALUES('200215185','周捷轮','男',23);</pre>
@@ -336,7 +336,7 @@
                                         </div>
                                         <textarea name="content" class="content"
                                                   min="0" max="20000"
-                                                  placeholder="推荐使用 Markdown 语法，至少输入 5 个字"></textarea>
+                                                  placeholder="推荐使用 Markdown 语法,至少输入 5 个字"></textarea>
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="tab-pane mkeditor-viewer markdown-body" id="mkeditor-viewer"
@@ -378,7 +378,7 @@
                 <h3>开始新实验</h3>
             </div>
             <div class="modal-body" style="text-align:center">
-                <p> 一个实验正在进行，是否停止它，开始新实验？</p>
+                <p> 一个实验正在进行,是否停止它,开始新实验？</p>
 
             </div>
             <div class="modal-footer" style="margin-top:0px">
@@ -399,7 +399,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <p>为了让评估结果更加准确，请注意以下操作：</p>
+                    <p>为了让评估结果更加准确,请注意以下操作：</p>
                     <ul>
                         <li>完成实验后点击「停止实验」按钮</li>
                         <li>将代码提交到代码库</li>
@@ -408,7 +408,7 @@
                         <li>尽可能减少无用操作</li>
                         <li>尽可能高效的利用内存/CPU资源</li>
                     </ul>
-                    <p>评估课还在不断完善中，我们真挚希望你能通过我们提供的这个平台，找到更好的发展机会。</p>
+                    <p>评估课还在不断完善中,我们真挚希望你能通过我们提供的这个平台,找到更好的发展机会。</p>
                 </div>
                 <br>
                 <div class="start-newlab"></div>
@@ -449,10 +449,10 @@
             </div>
             <div class="modal-body">
                 <div style="font-size:14px; font-weight:thin;">
-                    要在实验楼愉快地学习，先要熟练地使用 Linux，本实验介绍 Linux 基本操作，shell 环境下的常用命令。
+                    要在实验楼愉快地学习,先要熟练地使用 Linux,本实验介绍 Linux 基本操作,shell 环境下的常用命令。
                 </div>
                 <div style="margin:36px 0 18px; font-size:16px; font-weight:bold;">
-                    您有 <span style="color:#f66;"><strong></strong></span> 个实验豆，激活本课程需要消耗 <span
+                    您有 <span style="color:#f66;"><strong></strong></span> 个实验豆,激活本课程需要消耗 <span
                         style="color:#f66;"><strong>0</strong></span> 个实验豆！
                 </div>
                 <div style="color:#84B61A; font-size:14px; font-weight:bold;">激活后可不限次数学习本课。<a href="/faq#shiyandou"
