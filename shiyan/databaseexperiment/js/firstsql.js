@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     var useDb = '',
         tables = [],
         dbs = {
@@ -311,12 +312,6 @@ $(document).ready(function () {
 
             }
         }
-    else
-        {
-            console.log("***")
-        }
-
     }
-}
 })
 ;
