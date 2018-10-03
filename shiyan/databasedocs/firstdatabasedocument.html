@@ -202,7 +202,7 @@
                             <p>(4)创建和删除索引</p>
                             <p>(5)SELECT语句的基本用法</p>
                             <p>(6)使用WHERE子句进行有条件的查询</p>
-                            <p>(7)使用IN，NOT IN，BETWEEN AND等谓词查询</p>
+                            <p>(7)使用IN,NOT IN,BETWEEN AND等谓词查询</p>
                             <p>(8)利用LIKE子句实现模糊查询</p>
                             <p>(9)利用ORDER BY子句为结果排序</p>
                             <p>(10)用SQL Server的聚集函数进行统计计算</p>
@@ -218,11 +218,11 @@
                         <!--实验步骤-->
                         <div class="shiyanbuzhou">
                             <h5>4、实验步骤</h5>
-                            <p>设有一个学生-课程数据库，包括学生关系Student、课程关系Course和选修关系SC：</p>
-                            <p>学生表：Student(Sno，Sname，Ssex，Sage，Sdept)</p>
-                            <p>课程表：Course(Cno，Cname，Cpno，Ccredit)</p>
-                            <p>学生选课表：SC(Sno，Cno，Grade)
-                            <h6>(1)创建、删除表，例如：</h6>
+                            <p>设有一个学生-课程数据库,包括学生关系Student、课程关系Course和选修关系SC：</p>
+                            <p>学生表：Student(Sno,Sname,Ssex,Sage,Sdept)</p>
+                            <p>课程表：Course(Cno,Cname,Cpno,Ccredit)</p>
+                            <p>学生选课表：SC(Sno,Cno,Grade)
+                            <h6>(1)创建、删除表,例如：</h6>
                             <pre>    CREATE TABLE Student
         (Sno       CHAR(5)  NOT NULL  UNIQUE,
          Sname  CHAR(20)  UNIQUE,
@@ -237,17 +237,17 @@
             Primary key (Sno, Cno));
 
     DROP TABLE　Student;</pre>
-                            <h6>(2)查看、修改表的定义，例如：</h6>
+                            <h6>(2)查看、修改表的定义,例如：</h6>
                             <pre>    ALTER TABLE Student ADD Scome DATETIME
     ALTER TABLE Student ALTER COLUMN Sage SMALLINT</pre>
                             <h6>(3)创建和删除索引</h6>
-                            <pre>    CREATE UNIQUE INDEX  Stusno ON Student(Sno)；
-    CREATE UNIQUE INDEX Coucno ON Course(Cno)；
-    CREATE UNIQUE INDEX SCno ON SC(Sno ASC，Cno DESC)；
+                            <pre>    CREATE UNIQUE INDEX  Stusno ON Student(Sno);
+    CREATE UNIQUE INDEX Coucno ON Course(Cno);
+    CREATE UNIQUE INDEX SCno ON SC(Sno ASC,Cno DESC);
     DROP INDEX Stusno</pre>
                             <h5>单表查询</h5>
                             <h6>4.1 创建（定义）示例数据库S_T（复习）</h6>
-                            <p>（1）利用SQL Server集成管理器（简称SSMS）交互式创建数据库；</p>
+                            <p>（1）利用SQL Server集成管理器（简称SSMS）交互式创建数据库;</p>
                             <p>（2）利用SQL语句中的Create Database命令创建数据库（在查询子窗口中输入并执行SQL语句。例如：</p>
                             <pre>    Create Database S_T;</pre>
                             <h6>4.2 将S_T设为当前数据库（复习）</h6>
@@ -263,7 +263,7 @@
            Sdept CHAR(20)
           );
 
-    /*表Student的主码为Sno，属性列Sname取唯一值*/
+    /*表Student的主码为Sno,属性列Sname取唯一值*/
     create table Course
           (Cno CHAR(4) PRIMARY KEY,
            Cname CHAR(40),
@@ -272,7 +272,7 @@
            FOREIGN KEY (Cpno) REFERENCES Course(Cno)
           );
 
-    /*表Course的主码为Cno，属性列Cpno(先修课)为外码，被参照表为Course，被参照列是Cno*/
+    /*表Course的主码为Cno,属性列Cpno(先修课)为外码,被参照表为Course,被参照列是Cno*/
     create table SC
           (Sno CHAR(9),
            Cno CHAR(4),
@@ -282,7 +282,7 @@
            FOREIGN KEY (Cno) REFERENCES Course(Cno)
           );
 
-    /*表SC的主码为(Sno, Cno), Sno和Cno均为外码，被参照表分别为Student和Course，被参照列分别为Student.Sno和Course.Cno*/
+    /*表SC的主码为(Sno, Cno), Sno和Cno均为外码,被参照表分别为Student和Course,被参照列分别为Student.Sno和Course.Cno*/
                             </pre>
                             <p>② 利用SQL Server集成管理器（简称SSMS）交互式创建3个表。</p>
                             <h6>（2）在3个表中添加示例数据（任选一种数据添加方法）</h6>
@@ -434,30 +434,30 @@
                             <h6>4.4.1  基本练习</h6>
                             <p>(1)SELECT语句的基本用法</p>
                             <p>例如：查询全体学生的详细记录。</p>
-                            <pre>     SELECT  Sno，Sname，Ssex，Sage，Sdept
-     FROM Student；</pre>
+                            <pre>     SELECT  Sno,Sname,Ssex,Sage,Sdept
+     FROM Student;</pre>
                             <p>(2)使用WHERE子句进行有条件的查询</p>
                             <p>例如：查询选修2号课程且成绩在90分以上的所有学生的学号、姓名</p>
-                            <pre>     SELECT Student.Sno, student.Sname
+                            <pre>     SELECT Student.Sno, Student.Sname
      FROM    Student, SC
-     WHERE Student.Sno = SC.Sno AND  SC.Cno= ' 2 ' AND  SC.Grade > 90；</pre>
-                            <p>(3)使用IN，NOT IN，BETWEEN等谓词查询</p>
+     WHERE Student.Sno = SC.Sno AND  SC.Cno= ' 2 ' AND  SC.Grade >= 90;</pre>
+                            <p>(3)使用IN,NOT IN,BETWEEN等谓词查询</p>
                             <p>例如：查询信息系（IS）、数学系（MA）和计算机科学系（CS）学生的姓名和性别。</p>
-                            <pre>     SELECT Sname，Ssex
+                            <pre>     SELECT Sname,Ssex
      FROM  Student
-     WHERE Sdept IN ( 'IS'，'MA'，'CS' )</pre>
+     WHERE Sdept IN ( 'IS','MA','CS' )</pre>
                             <p>例如：查询年龄在20~23岁（包括20岁和23岁）之间的学生的姓名、系别和年龄。</p>
-                            <pre>     SELECT Sname，Sdept，Sage
+                            <pre>     SELECT Sname,Sdept,Sage
      FROM   Student
      WHERE Sage BETWEEN 20 AND 23</pre>
                             <p>(4)利用LIKE子句实现模糊查询</p>
                             <p>例如：查询所有姓刘学生的姓名、学号和性别。</p>
-                            <pre>     SELECT Sname，Sno，Ssex
+                            <pre>     SELECT Sname,Sno,Ssex
      FROM Student
      WHERE  Sname LIKE ‘刘%’</pre>
                             <p>(5)利用ORDER子句为结果排序</p>
-                            <p>例如：查询选修了3号课程的学生的学号及其成绩，查询结果按分数降序排列。</p>
-                            <pre>     SELECT Sno，Grade
+                            <p>例如：查询选修了3号课程的学生的学号及其成绩,查询结果按分数降序排列。</p>
+                            <pre>     SELECT Sno,Grade
      FROM  SC
      WHERE  Cno= ' 3 '
      ORDER BY Grade DESC</pre>
@@ -473,17 +473,17 @@
      GROUP BY Sno
      HAVING  COUNT(*) >3</pre>
                             <br>
-                            <h6>4.4.2  扩展练习（要求写出并执行SQL语句来完成以下各种操作，记录查询结果）</h6>
-                            <p>（1）查询全体学生的学号、姓名和年龄；</p>
-                            <p>（2）查询所有计算机系学生的详细记录；</p>
-                            <p>（3）找出考试成绩为优秀（90分及以上）或不及格的学生的学号、课程号及成绩；</p>
-                            <p>（4）查询年龄不在19~20岁之间的学生姓名、性别和年龄；</p>
-                            <p>（5）查询数学系（MA）、信息系（IS)的学生的姓名和所在系；</p>
-                            <p>（6）查询名称中包含“数据”的所有课程的课程号、课程名及其学分；</p>
-                            <p>（7) 找出所有没有选修课成绩的学生学号和课程号；</p>
+                            <h6>4.4.2  扩展练习（要求写出并执行SQL语句来完成以下各种操作,记录查询结果）</h6>
+                            <p>（1）查询全体学生的学号、姓名和年龄;</p>
+                            <p>（2）查询所有计算机系学生的详细记录;</p>
+                            <p>（3）找出考试成绩为优秀（90分及以上）或不及格的学生的学号、课程号及成绩;</p>
+                            <p>（4）查询年龄不在19~20岁之间的学生姓名、性别和年龄;</p>
+                            <p>（5）查询数学系（MA）、信息系（IS)的学生的姓名和所在系;</p>
+                            <p>（6）查询名称中包含“数据”的所有课程的课程号、课程名及其学分;</p>
+                            <p>（7) 找出所有没有选修课成绩的学生学号和课程号;</p>
                             <p>（思考：如何查询所有没有选修课成绩的计算机系的学生学号和课程号？）</p>
-                            <p>（8）查询学生200215121选修课的最高分、最低分以及平均成绩；</p>
-                            <p>（9）查询选修了2号课程的学生的学号及其成绩，查询结果按成绩升序排列；</p>
+                            <p>（8）查询学生200215121选修课的最高分、最低分以及平均成绩;</p>
+                            <p>（9）查询选修了2号课程的学生的学号及其成绩,查询结果按成绩升序排列;</p>
                             <p>（10）查询每个系名及其学生的平均年龄。</p>
                             <p>（思考：如何查询学生平均年龄在19岁以下（含19岁）的系别及其学生的平均年龄？）</p>
                         </div>
@@ -573,7 +573,7 @@
                                         </div>
                                         <textarea name="content" class="content"
                                                   min="0" max="20000"
-                                                  placeholder="推荐使用 Markdown 语法，至少输入 5 个字"></textarea>
+                                                  placeholder="推荐使用 Markdown 语法,至少输入 5 个字"></textarea>
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="tab-pane mkeditor-viewer markdown-body" id="mkeditor-viewer"
@@ -615,7 +615,7 @@
                 <h3>开始新实验</h3>
             </div>
             <div class="modal-body" style="text-align:center">
-                <p> 一个实验正在进行，是否停止它，开始新实验？</p>
+                <p> 一个实验正在进行,是否停止它,开始新实验？</p>
 
             </div>
             <div class="modal-footer" style="margin-top:0px">
@@ -636,7 +636,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <p>为了让评估结果更加准确，请注意以下操作：</p>
+                    <p>为了让评估结果更加准确,请注意以下操作：</p>
                     <ul>
                         <li>完成实验后点击「停止实验」按钮</li>
                         <li>将代码提交到代码库</li>
@@ -645,7 +645,7 @@
                         <li>尽可能减少无用操作</li>
                         <li>尽可能高效的利用内存/CPU资源</li>
                     </ul>
-                    <p>评估课还在不断完善中，我们真挚希望你能通过我们提供的这个平台，找到更好的发展机会。</p>
+                    <p>评估课还在不断完善中,我们真挚希望你能通过我们提供的这个平台,找到更好的发展机会。</p>
                 </div>
                 <br>
                 <div class="start-newlab"></div>
@@ -686,10 +686,10 @@
             </div>
             <div class="modal-body">
                 <div style="font-size:14px; font-weight:thin;">
-                    要在实验楼愉快地学习，先要熟练地使用 Linux，本实验介绍 Linux 基本操作，shell 环境下的常用命令。
+                    要在实验楼愉快地学习,先要熟练地使用 Linux,本实验介绍 Linux 基本操作,shell 环境下的常用命令。
                 </div>
                 <div style="margin:36px 0 18px; font-size:16px; font-weight:bold;">
-                    您有 <span style="color:#f66;"><strong></strong></span> 个实验豆，激活本课程需要消耗 <span
+                    您有 <span style="color:#f66;"><strong></strong></span> 个实验豆,激活本课程需要消耗 <span
                         style="color:#f66;"><strong>0</strong></span> 个实验豆！
                 </div>
                 <div style="color:#84B61A; font-size:14px; font-weight:bold;">激活后可不限次数学习本课。<a href="/faq#shiyandou"

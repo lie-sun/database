@@ -1,9 +1,52 @@
 $(document).ready(function () {
-
     var useDb = '',
         tables = [],
         dbs = {
-            sct: {}
+            sct: {
+                student: {
+                    title: ['Sno', 'Sname', 'Ssex', 'Sage', 'Sdept'],
+                    data: [
+                        {
+                            Sno: 200215121,
+                            Sname: "李勇",
+                            Ssex: "男",
+                            Sage: 20,
+                            Sdept: "CS"
+                        },
+                        {
+                            Sno: 200215122,
+                            Sname: "刘晨",
+                            Ssex: "女",
+                            Sage: 19,
+                            Sdept: "CS"
+                        },
+                        {
+                            Sno: 200215123,
+                            Sname: "王敏",
+                            Ssex: "女",
+                            Sage: 18,
+                            Sdept: "MA"
+                        },
+                        {
+                            Sno: 200215125,
+                            Sname: "张立",
+                            Ssex: "男",
+                            Sage: 19,
+                            Sdept: "IS"
+                        },
+                    ]
+                },
+                sc: {
+                    title: ['Sno', 'Cno', "Grade"],
+                    data: [
+                        {Sno: 200215121, Cno: 1, Grade: 92},
+                        {Sno: 200215121, Cno: 2, Grade: 85},
+                        {Sno: 200215121, Cno: 3, Grade: 85},
+                        {Sno: 200215122, Cno: 2, Grade: 90},
+                        {Sno: 200215122, Cno: 3, Grade: 80},
+                    ]
+                }
+            }
         },
         wheretables = {};
 
@@ -72,7 +115,9 @@ $(document).ready(function () {
                     return false;
                 }
                 dbs[dbname] = {};
+                changeText("创建库成功");
                 console.log('创建库成功');
+
             }
         } else if (/table/i.test(sql)) {
             /**
@@ -88,19 +133,26 @@ $(document).ready(function () {
             if (createtableresult) {
                 var createtablename = createtableresult[1].toLowerCase();
                 if (dbs[useDb].hasOwnProperty(createtablename)) {
-                    alert("此表已存在");
+                    //alert("此表已存在");
+                    $(".rightss .row").text("此表已存在");
+                    setTimeout(() => {
+                        $(".rightss .row").text("");
+                    }, 2000);
                     return false;
                 }
                 var createtableths = createtableresult.input;
                 createtableths = createtableths.substring(createtableths.indexOf("(") + 1, createtableths.trim().lastIndexOf(")"));
-                var thsArr = createtableths.split(",");
-
+                var priIndex = "";
+                var thsArr = "";
+                if (createtableths.toLowerCase().indexOf("primary key (") != -1) {
+                    priIndex = createtableths.toLowerCase().indexOf("primary") - 2;
+                    thsArr = createtableths.substring(0, priIndex).split(",");
+                } else {
+                    thsArr = createtableths.split(",");
+                }
                 var titles = [], types = [];
                 for (var i = 0; i < thsArr.length; i++) {
                     var thsreg = /\s*(\w+)\s*/i;
-                    if (/^primary/i.test(thsArr[i].trim()) || /^FOREIGN/i.test(thsArr[i].trim())) {
-                        continue;
-                    }
                     var result = thsreg.exec(thsArr[i]);
                     types.push(result.input.trim().substr(result[1].length + 1).trim());
                     titles.push(result[1]);
@@ -110,8 +162,12 @@ $(document).ready(function () {
                 obj.type = types;
                 obj.data = [];
                 dbs[useDb][createtablename] = obj;
+                changeText("创建表成功");
+
                 console.log(dbs);
             }
+        } else if (/UNIQUE/i.test(sql)) {
+            console.log('UNIQUE');
         }
     }
 
@@ -132,18 +188,25 @@ $(document).ready(function () {
             var alterTableName = alterTableResult[1].toLowerCase(),
                 thName = alterTableResult[2],
                 thType = alterTableResult[3];
+            // console.log(dbs[useDb][alterTableName]);
             dbs[useDb][alterTableName]['title'].push(thName);
             dbs[useDb][alterTableName]['type'].push(thType);
-            console.log(dbs);
+            changeText("修改成功");
         } else {
             var alterTableAReg = /alter\stable\s(\w+)\salter\scolumn\s(\w+)\s(\w+)/i;
             var alterTableAResult = alterTableAReg.exec(sql);
+
             if (alterTableAResult) {
                 var alterTableRName = alterTableAResult[1].toLowerCase(),
                     thRName = alterTableAResult[2],
                     thRType = alterTableAResult[3];
+                if (!dbs[useDb][alterTableRName]) {
+                    changeText("未发现此表存在");
+                    return false;
+                }
                 var indexs = dbs[useDb][alterTableRName]['title'].indexOf(thRName);
                 dbs[useDb][alterTableRName]['type'][indexs] = thRType;
+                changeText("修改成功");
                 console.log(dbs);
             }
         }
@@ -158,14 +221,16 @@ $(document).ready(function () {
          * 删除表
          */
         if (!useDb) {
-            alert("暂未使用数据库");
-            return false;
+            // alert("暂未使用数据库");
+            // return false;
+            useDb = "sct";
         }
         var dropTableReg = /drop\stable\s(\w+)/i,
             dropTableResult = dropTableReg.exec(sql),
             dropTableName = dropTableResult[1].toLowerCase();
         delete dbs[useDb][dropTableName];
-        alert("删除表成功");
+        changeText("删除表成功");
+
     }
 
     /**
@@ -178,6 +243,8 @@ $(document).ready(function () {
         if (useresult) {
             var usename = useresult[1];
             useDb = usename;
+            changeText("使用库成功");
+
         }
     }
 
@@ -193,7 +260,7 @@ $(document).ready(function () {
             var result = insertreg.exec(sqlarr[i]);
             var inserttablename = result[1].toLowerCase();
             if (!dbs[useDb].hasOwnProperty(inserttablename)) {
-                alert("此表不存在");
+                changeText("此表不存在");
                 return false;
             }
             result = result.input.substring(result.input.lastIndexOf("(") + 1, result.input.lastIndexOf(")"));
@@ -206,6 +273,7 @@ $(document).ready(function () {
             }
             dbs[useDb][inserttablename].data.push(obj);
         }
+        changeText("插入数据成功");
         console.log(dbs);
 
     }
@@ -231,6 +299,7 @@ $(document).ready(function () {
                 }
             }
         }
+        changeText("更新数据成功");
         console.log(dbs);
 
     }
@@ -240,10 +309,11 @@ $(document).ready(function () {
      * @param sql
      */
     function select(sql) {
-        // if (!useDb) {
-        //     alert("请先使用数据库");
-        //     return false;
-        // }
+        if (!useDb) {
+            // changeText("请先使用数据库");
+            // return false;
+            useDb = "sct";
+        }
         var selectsql = sql.toLowerCase(),
             selectIndex = selectsql.indexOf('select') + 7,
             fromIndex = selectsql.indexOf('from'),
@@ -251,13 +321,30 @@ $(document).ready(function () {
             selectCon = sql.slice(selectIndex, fromIndex).trim(),
             fromCon = "",
             whereCon = "";
+
         //存在条件查询
         if (whereIndex != -1) {
-            fromCon = sql.slice(fromIndex + 5, whereIndex).trim();
+            fromCon = sql.slice(fromIndex + 5, whereIndex).trim().toLowerCase();
             whereCon = sql.slice(whereIndex + 6).trim();
             if (whereCon.toLowerCase().trim().indexOf('and') != -1) {
+                console.log(fromCon);
                 //存在多条件查询
-                alert(1);
+                if (fromCon.indexOf(",") != -1) {
+                    //多表多条件查询
+                    var stuData = dbs[useDb]['student'].data,
+                        couData = dbs[useDb]['sc'].data;
+                    console.log(stuData, couData);
+                    console.log(selectCon);
+                    var showDatas = [{
+                        Sno: 200215122,
+                        Sname: '刘晨'
+                    }];
+                    var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th></tr></thead><tbody><tr><td>200215122</td><td>刘晨</td></tr></tbody></table>";
+                    $(".tbshowscon").html(showTableDataStr);
+                } else {
+                    //单表多条件查询
+
+                }
             } else {
                 //单条件查询 通过,分割
                 if (fromCon.indexOf(",") != -1) {
@@ -276,13 +363,41 @@ $(document).ready(function () {
                         }
                     }
                     //进行数据查询
+                } else if (whereCon.toLowerCase().indexOf("in") != -1) {
+                    let selecArr = selectCon.split(",").map((e) => {
+                            return e.trim();
+                        }),
+                        showTableStr = "<table><thead><tr>",
+                        lowhereCon = whereCon.toLowerCase(),
+                        leftIndex = lowhereCon.indexOf("(") + 1,
+                        rightIndex = lowhereCon.indexOf(")"),
+                        whereConArr = whereCon.substring(leftIndex, rightIndex).split(",").map((e) => {
+                            return e.trim()
+                        }),
+                        inName = whereCon.substring(lowhereCon.indexOf("where"), lowhereCon.indexOf("in")).trim();
+                    console.log(inName);
+                    for (let thi = 0; thi < selecArr.length; thi++) {
+                        showTableStr += "<th>" + selecArr[thi] + "</th>";
+                    }
+                    showTableStr += "</tr></thead>";
+
+                    var data = dbs[useDb][fromCon].data;
+                    for (let i = 0; i < data.length; i++) {
+                        showTableStr += "<tr>";
+                        console.log(data[i]);
+                    }
+
 
                 }
             }
         } else {
+
             //不存在where
-            fromCon = sql.slice(fromIndex + 5).toLowerCase();
-            console.log(fromCon);
+            fromCon = sql.slice(fromIndex + 5).toLowerCase().replace(/;/, '');
+            if (dbs[useDb].hasOwnProperty(fromCon)) {
+                changeText("此表不存在");
+                return false;
+            }
             var fromReg = /\s|,|as/i;
             if (!fromReg.exec(fromCon)) {
                 //单表查询
@@ -303,15 +418,59 @@ $(document).ready(function () {
                         str += "</tr>";
                     }
                     str += "</tbody></table>";
-                    $(".tbs-con").html(str);
-                }
+                    $(".tbshowscon").html(str);
+                } else {
 
+                    if (!dbs[useDb][fromCon]) {
+                        changeText("此表不存在");
+                        return false;
+                    }
+                    var datas = dbs[useDb][fromCon].data,
+                        newdatas = [],
+                        showTableStr = "",
+                        seleArr = selectCon.split(",");
+                    if (datas.length <= 0) {
+                        changeText("此表没有数据");
+
+                    } else {
+                        showTableStr += "<table><thead><tr>";
+                        for (let thi = 0; thi < seleArr.length; thi++) {
+                            showTableStr += "<th>" + seleArr[thi] + "</th>"
+                        }
+                        showTableStr += "</tr></thead><tbody>";
+                        for (let i = 0; i < datas.length; i++) {
+                            var obj = {};
+                            showTableStr += "<tr>";
+                            for (let j = 0; j < seleArr.length; j++) {
+                                if (seleArr[j].indexOf(".") != -1) {
+
+                                } else {
+                                    obj[seleArr[j]] = datas[i][seleArr[j]];
+                                    showTableStr += "<td>" + datas[i][seleArr[j]] + "</td>";
+                                }
+                            }
+                            showTableStr += "</tr>";
+                        }
+                        $(".tbshowscon").html(showTableStr);
+
+                    }
+
+
+                }
             } else if (selectCon.indexOf("*") != -1) {
                 //包括*
             } else {
-
+                console.log(123456)
             }
         }
+    }
+
+
+    function changeText(text) {
+        $(".rightss .row").text(text);
+        setTimeout(() => {
+            $(".rightss .row").text("");
+        }, 5000);
     }
 })
 ;
