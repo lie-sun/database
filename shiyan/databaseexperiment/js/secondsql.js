@@ -144,7 +144,7 @@ $(document).ready(function () {
                 var createtableths = createtableresult.input;
                 createtableths = createtableths.substring(createtableths.indexOf("(") + 1, createtableths.trim().lastIndexOf(")"));
                 var priIndex = "";
-                var thsArr = "";
+                var thsArr = '';
                 if (createtableths.toLowerCase().indexOf("primary key (") != -1) {
                     priIndex = createtableths.toLowerCase().indexOf("primary") - 2;
                     thsArr = createtableths.substring(0, priIndex).split(",");
@@ -322,45 +322,57 @@ $(document).ready(function () {
                             showTableDataStr = "<table><thead><tr>";
                         if (selectCon.indexOf("*") != -1) {
 
+                            seleArr = dbs[useDb]['student'].title.concat(dbs[useDb]['sc'].title);
+                            seleArr = dedupe(seleArr);
+
                         } else {
                             seleArr = selectCon.split(",").map((e) => {
                                 return e.trim();
                             });
-                            for (let ti = 0; ti < seleArr.length; ti++) {
-                                if (seleArr[ti].indexOf(".") != -1) {
-                                    titles.push(seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim());
-                                    showTableDataStr += "<th>" + seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim() + "</th>";
-                                } else {
-                                    titles.push(seleArr[ti].trim());
-                                    showTableDataStr += "<th>" + seleArr[ti].trim() + "</th>";
-                                }
+                            // for (let ti = 0; ti < seleArr.length; ti++) {
+                            //     if (seleArr[ti].indexOf(".") != -1) {
+                            //         titles.push(seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim());
+                            //         showTableDataStr += "<th>" + seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim() + "</th>";
+                            //     } else {
+                            //         titles.push(seleArr[ti].trim());
+                            //         showTableDataStr += "<th>" + seleArr[ti].trim() + "</th>";
+                            //     }
+                            // }
+                        }
+                        for (let ti = 0; ti < seleArr.length; ti++) {
+                            if (seleArr[ti].indexOf(".") != -1) {
+                                titles.push(seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim());
+                                showTableDataStr += "<th>" + seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim() + "</th>";
+                            } else {
+                                titles.push(seleArr[ti].trim());
+                                showTableDataStr += "<th>" + seleArr[ti].trim() + "</th>";
                             }
                         }
-
                         showTableDataStr += "</tr></thead><tbody>";
                         for (let fi = 0; fi < wheretables[0].data.length; fi++) {
                             var obj = {};
 
                             for (let si = 0; si < wheretables[1].data.length; si++) {
                                 if (wheretables[0].data[fi][thName] == wheretables[1].data[si][thName]) {
+                                    console.log(123456)
                                     showTableDataStr += "<tr>";
-                                    if (selectCon.indexOf("*") != -1) {
+                                    // if (selectCon.indexOf("*") != -1) {
+                                    //
+                                    // } else {
+                                    for (let i = 0; i < seleArr.length; i++) {
 
-                                    } else {
-                                        for (let i = 0; i < seleArr.length; i++) {
-
-                                            if (seleArr[i].indexOf(".") != -1) {
-                                                showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i].substring(seleArr[i].indexOf('.') + 1,).trim()] + "</td>";
+                                        if (seleArr[i].indexOf(".") != -1) {
+                                            showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i].substring(seleArr[i].indexOf('.') + 1,).trim()] + "</td>";
+                                        } else {
+                                            if (dbs[useDb]['student'].title.indexOf(seleArr[i]) != -1) {
+                                                showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i]] + "</td>";
                                             } else {
-                                                if (dbs[useDb]['student'].title.indexOf(seleArr[i]) != -1) {
-                                                    showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i]] + "</td>";
-                                                } else {
-                                                    showTableDataStr += "<td>" + wheretables[1].data[si][seleArr[i]] + "</td>";
-                                                }
+                                                showTableDataStr += "<td>" + wheretables[1].data[si][seleArr[i]] + "</td>";
                                             }
-
                                         }
+
                                     }
+                                    // }
                                     showTableDataStr += "</tr>";
                                 }
                             }
@@ -421,5 +433,14 @@ $(document).ready(function () {
         timeOut = setTimeout(() => {
             $(".rightss .row").text("");
         }, 5000);
+    }
+
+    /**
+     * 数组去重
+     * @param array
+     * @returns {any[]}
+     */
+    function dedupe(array) {
+        return Array.from(new Set(array));
     }
 });
