@@ -333,23 +333,63 @@
                                 <tbody>
                                 <tr>
                                     <td>课程号
-                                    Cno</td>	<td>课程名
-                                    Cname</td>	<td>现行课
-                                    Cpno</td>	<td>学分
-                                    Ccredit</td>
+                                        Cno
+                                    </td>
+                                    <td>课程名
+                                        Cname
+                                    </td>
+                                    <td>现行课
+                                        Cpno
+                                    </td>
+                                    <td>学分
+                                        Ccredit
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>1</td>	<td>数据库</td>	 <td>5</td>	 <td>4 </td></tr>
-                                <tr><td>2</td>	 <td>数学</td>	<td></td>	 <td>2</td> </tr>
-                                <tr><td>3</td>	 <td>信息系统</td>	 <td>5</td>	 <td>4</td></tr>
-                                <tr><td>4</td>	 <td>操作系统</td>	 <td>6</td>	 <td>3</td></tr>
-                                <tr><td>5</td>	 <td>数据结构</td>	 <td>7</td>	 <td>4</td></tr>
-                                <tr><td>6</td>	 <td>数据处理</td>	 <td></td>	 <td>2</td></tr>
-                                <tr><td>7</td>	 <td>PASCAL语言</td>	 <td>6</td>	 <td>4</td></tr>
+                                    <td>1</td>
+                                    <td>数据库</td>
+                                    <td>5</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>数学</td>
+                                    <td></td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>信息系统</td>
+                                    <td>5</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>操作系统</td>
+                                    <td>6</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>数据结构</td>
+                                    <td>7</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>数据处理</td>
+                                    <td></td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>PASCAL语言</td>
+                                    <td>6</td>
+                                    <td>4</td>
+                                </tr>
 
                                 </tbody>
                             </table>
-
 
 
                             <h6>表SC</h6>
@@ -394,7 +434,7 @@
                                 </tbody>
                             </table>
                             <br>
-<p>① 用SQL语句中的更新语句（Insert语句、Update语句和Delete语句）往3个表输入示例数据。</p>
+                            <p>① 用SQL语句中的更新语句（Insert语句、Update语句和Delete语句）往3个表输入示例数据。</p>
                             <pre>    use S_T;/*将S_T设为当前数据库*/
 
     insert into student values('200215121','李勇','男',20,'CS');
@@ -429,9 +469,9 @@
     /*为表SC添加数据*/
     go</pre>
                             <p>② 利用SQL Server集成管理器（简称SSMS）交互式输入数据。</p>
-<h6>4.4 对学生关系Student、课程关系Course和选修关系SC进行查询。</h6>
+                            <h6>4.4 对学生关系Student、课程关系Course和选修关系SC进行查询。</h6>
                             <br>
-                            <h6>4.4.1  基本练习</h6>
+                            <h6>4.4.1 基本练习</h6>
                             <p>(1)SELECT语句的基本用法</p>
                             <p>例如：查询全体学生的详细记录。</p>
                             <pre>     SELECT  Sno,Sname,Ssex,Sage,Sdept
@@ -454,7 +494,7 @@
                             <p>例如：查询所有姓刘学生的姓名、学号和性别。</p>
                             <pre>     SELECT Sname,Sno,Ssex
      FROM Student
-     WHERE  Sname LIKE ‘刘%’</pre>
+     WHERE  Sname LIKE '刘%'</pre>
                             <p>(5)利用ORDER子句为结果排序</p>
                             <p>例如：查询选修了3号课程的学生的学号及其成绩,查询结果按分数降序排列。</p>
                             <pre>     SELECT Sno,Grade
@@ -473,7 +513,7 @@
      GROUP BY Sno
      HAVING  COUNT(*) >3</pre>
                             <br>
-                            <h6>4.4.2  扩展练习（要求写出并执行SQL语句来完成以下各种操作,记录查询结果）</h6>
+                            <h6>4.4.2 扩展练习（要求写出并执行SQL语句来完成以下各种操作,记录查询结果）</h6>
                             <p>（1）查询全体学生的学号、姓名和年龄;</p>
                             <p>（2）查询所有计算机系学生的详细记录;</p>
                             <p>（3）找出考试成绩为优秀（90分及以上）或不及格的学生的学号、课程号及成绩;</p>

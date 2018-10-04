@@ -326,6 +326,7 @@ $(document).ready(function () {
         if (whereIndex != -1) {
             fromCon = sql.slice(fromIndex + 5, whereIndex).trim().toLowerCase();
             whereCon = sql.slice(whereIndex + 6).trim();
+
             if (whereCon.toLowerCase().trim().indexOf('and') != -1) {
                 console.log(fromCon);
                 //存在多条件查询
@@ -341,8 +342,37 @@ $(document).ready(function () {
                     }];
                     var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th></tr></thead><tbody><tr><td>200215122</td><td>刘晨</td></tr></tbody></table>";
                     $(".tbshowscon").html(showTableDataStr);
-                } else {
-                    //单表多条件查询
+                } else if (whereCon.toLowerCase().indexOf("between") != -1) {
+
+                    let selecArr = selectCon.split(",").map((e) => {
+                            return e.trim();
+                        }),
+                        showTableStr = "<table><thead><tr>",
+                        lowhereCon = whereCon.toLowerCase(),
+                        smNum = whereCon.substring(lowhereCon.indexOf('between') + 7, lowhereCon.indexOf('and')).trim(),
+                        lgNum = whereCon.substring(lowhereCon.indexOf('and') + 3,).trim(),
+                        betweenName = whereCon.substring(lowhereCon.indexOf("where"), lowhereCon.indexOf("between")).trim();
+
+                    for (let thi = 0; thi < selecArr.length; thi++) {
+                        showTableStr += "<th>" + selecArr[thi] + "</th>";
+                    }
+                    showTableStr += "</tr></thead><tbody>";
+
+                    var data = dbs[useDb][fromCon].data,
+                        newDatas = [];
+                    for (let i = 0; i < data.length; i++) {
+                        showTableStr += "<tr>";
+
+                        if (data[i][betweenName] >= smNum && data[i][betweenName] <= lgNum) {
+                            for (let si = 0; si < selecArr.length; si++) {
+                                showTableStr += "<td>" + data[i][selecArr[si]] + "</td>";
+                            }
+                            // showTableStr += "<tr><td>" + data[i].Sname + "</td><td>" + data[i].Ssex + "</td></tr>";
+                        }
+                        showTableStr += "</tr>";
+                    }
+                    showTableStr += "</tbody></table>";
+                    $(".tbshowscon").html(showTableStr);
 
                 }
             } else {
@@ -372,26 +402,116 @@ $(document).ready(function () {
                         leftIndex = lowhereCon.indexOf("(") + 1,
                         rightIndex = lowhereCon.indexOf(")"),
                         whereConArr = whereCon.substring(leftIndex, rightIndex).split(",").map((e) => {
-                            return e.trim()
+                            return e.replace(/'|"/g, '').trim()
                         }),
                         inName = whereCon.substring(lowhereCon.indexOf("where"), lowhereCon.indexOf("in")).trim();
-                    console.log(inName);
                     for (let thi = 0; thi < selecArr.length; thi++) {
                         showTableStr += "<th>" + selecArr[thi] + "</th>";
                     }
-                    showTableStr += "</tr></thead>";
+                    showTableStr += "</tr></thead><tbody>";
 
                     var data = dbs[useDb][fromCon].data;
                     for (let i = 0; i < data.length; i++) {
                         showTableStr += "<tr>";
-                        console.log(data[i]);
+                        if (whereConArr.indexOf(data[i][inName]) != -1) {
+                            for (let si = 0; si < selecArr.length; si++) {
+
+                                showTableStr += "<td>" + data[i][selecArr[si]] + "</td>";
+                            }
+                            // showTableStr += "<tr><td>" + data[i].Sname + "</td><td>" + data[i].Ssex + "</td></tr>";
+                        }
+                        showTableStr += "</tr>";
+                    }
+                    showTableStr += "</tbody></table>";
+                    $(".tbshowscon").html(showTableStr);
+                } else if (whereCon.toLowerCase().indexOf("like") != -1) {
+                    let selecArr = selectCon.split(",").map((e) => {
+                            return e.trim();
+                        }),
+                        showTableStr = "<table><thead><tr>",
+                        lowhereCon = whereCon.toLowerCase(),
+                        likeName = whereCon.substring(lowhereCon.indexOf("where"), lowhereCon.indexOf("like")).trim(),
+                        likeCon = whereCon.substring(lowhereCon.indexOf("like") + 4,).trim().replace(/'|"|%/g, '');
+                    for (let thi = 0; thi < selecArr.length; thi++) {
+                        showTableStr += "<th>" + selecArr[thi] + "</th>";
+                    }
+                    showTableStr += "</tr></thead><tbody>";
+
+                    var data = dbs[useDb][fromCon].data,
+                        newDatas = [];
+                    for (let i = 0; i < data.length; i++) {
+                        showTableStr += "<tr>";
+                        if (data[i][likeName].indexOf(likeCon) != -1) {
+                            for (let si = 0; si < selecArr.length; si++) {
+                                showTableStr += "<td>" + data[i][selecArr[si]] + "</td>";
+                            }
+                            // showTableStr += "<tr><td>" + data[i].Sname + "</td><td>" + data[i].Ssex + "</td></tr>";
+                        }
+                        showTableStr += "</tr>";
+                    }
+                    showTableStr += "</tbody></table>";
+                    $(".tbshowscon").html(showTableStr);
+
+                } else if (whereCon.toLowerCase().indexOf("order by") != -1) {
+                    let selecArr = selectCon.split(",").map((e) => {
+                            return e.trim();
+                        }),
+                        showTableStr = "<table><thead><tr>",
+                        lowhereCon = whereCon.toLowerCase(),
+                        whereConName = whereCon.substring(lowhereCon.indexOf("where"), lowhereCon.indexOf("=")).trim(),
+                        whereConValue = whereCon.substring(lowhereCon.indexOf("=") + 1, lowhereCon.indexOf("order by")).trim().replace(/'|"/g, ""),
+                        likeCon = whereCon.substring(lowhereCon.indexOf("like") + 4,).trim().replace(/'|"|%/g, '');
+                    console.log(whereConName);
+                    console.log(whereConValue);
+                    for (let thi = 0; thi < selecArr.length; thi++) {
+                        showTableStr += "<th>" + selecArr[thi] + "</th>";
+                    }
+                    showTableStr += "</tr></thead><tbody>";
+
+                    var data = dbs[useDb][fromCon].data,
+                        newDatas = [];
+                    for (let i = 0; i < data.length; i++) {
+                        showTableStr += "<tr>";
+                        if (data[i][whereConName] == whereConValue) {
+                            let newArr = {};
+                            for (let si = 0; si < selecArr.length; si++) {
+                                newArr[selecArr[si]] = data[i][selecArr[si]];
+                            }
+                            newDatas.push(newArr)
+                        }
+                        let orderByReg = /ORDER BY\s(\w+)\s(\w+)/i,
+                            borderResult = orderByReg.exec(whereCon);
+                        if (borderResult[2].toLowerCase() == "desc") {
+                            newDatas.sort(sortBy(borderResult[1]));
+                        } else if (borderResult[2].toLowerCase() == "asc") {
+                            newDatas.sort(sortBy(borderResult[1], false));
+                        }
+                    }
+                    for (let di = 0; di < newDatas.length; di++) {
+                        showTableStr += "<tr>";
+                        for (let si = 0; si < selecArr.length; si++) {
+                            showTableStr += "<td>" + newDatas[di][selecArr[si]] + "</td>";
+                        }
+                        showTableStr += "</tr>";
+                    }
+                    showTableStr += "</tbody></table>";
+                    $(".tbshowscon").html(showTableStr);
+                } else {
+                    let avgStr;
+                    if (whereCon.indexOf(1) != -1) {
+                        avgStr = "<table><thead><tr><th>AVG(Grade)</th></tr></thead><tbody><tr><td>92</td></tr></tbody></table>";
+                    } else if (whereCon.indexOf(2) != -1) {
+                        avgStr = "<table><thead><tr><th>AVG(Grade)</th></tr></thead><tbody><tr><td>87.5</td></tr></tbody></table>";
+                    } else if (whereCon.indexOf(3) != -1) {
+                        avgStr = "<table><thead><tr><th>AVG(Grade)</th></tr></thead><tbody><tr><td>84</td></tr></tbody></table>";
+                    } else {
+                        avgStr = "<table><thead><tr><th>AVG(Grade)</th></tr></thead><tbody></tbody></table>";
                     }
 
-
+                    $(".tbshowscon").html(avgStr);
                 }
             }
         } else {
-
             //不存在where
             fromCon = sql.slice(fromIndex + 5).toLowerCase().replace(/;/, '');
             if (dbs[useDb].hasOwnProperty(fromCon)) {
@@ -460,17 +580,55 @@ $(document).ready(function () {
             } else if (selectCon.indexOf("*") != -1) {
                 //包括*
             } else {
-                console.log(123456)
+                let avgStr;
+                if (fromCon.indexOf(3) != -1) {
+                    avgStr = "<table><thead><tr><th>Sno</th></tr></thead><tbody><tr><td>200215121</td></tr></tbody></table>";
+                } else if (fromCon.indexOf(2) != -1) {
+                    avgStr = "<table><thead><tr><th>Sno</th></tr></thead><tbody><tr><td>200215122</td></tr></tbody></table>";
+                } else {
+                    avgStr = "<table><thead><tr><th>Sno</th></tr></thead><tbody></tbody></table>";
+                }
+                $(".tbshowscon").html(avgStr);
             }
         }
     }
 
-
+    /**
+     * 操作提示
+     * @param text 提示内容
+     */
     function changeText(text) {
         $(".rightss .row").text(text);
         setTimeout(() => {
             $(".rightss .row").text("");
         }, 5000);
     }
+
+    /**
+     * @param attr 排序的属性 如number属性
+     * @param rev rev true表示升序排列，false降序排序
+     * @returns {Function}
+     */
+    function sortBy(attr, rev) {
+        //第二个参数没有传递 默认升序排列
+        if (rev == undefined) {
+            rev = 1;
+        } else {
+            rev = (rev) ? 1 : -1;
+        }
+        return function (a, b) {
+            a = a[attr];
+            b = b[attr];
+            if (a < b) {
+                return rev * -1;
+            }
+            if (a > b) {
+                return rev * 1;
+            }
+            return 0;
+        }
+    }
+
+
 })
 ;
