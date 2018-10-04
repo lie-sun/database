@@ -335,8 +335,6 @@ $(document).ready(function () {
                     //多表多条件查询
                     var stuData = dbs[useDb]['student'].data,
                         couData = dbs[useDb]['sc'].data;
-                    console.log(stuData, couData);
-                    console.log(selectCon);
                     var showDatas = [{
                         Sno: 200215122,
                         Sname: '刘晨'

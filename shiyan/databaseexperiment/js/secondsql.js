@@ -48,7 +48,27 @@ $(document).ready(function () {
                 },
                 course: {
                     title: [],
-                    data: [],
+                    data: [{
+                        Cno: 1,
+                        Cname: "数据库",
+                        Cpno: 5,
+                        Ccredit: 4,
+                    },
+                        {
+                            Cno: 2, Cname: '数学', Cpno: "", Ccredit: 2
+                        }, {
+                            Cno: 3, Cname: '信息系统', Cpno: 5, Ccredit: 4
+                        }, {
+                            Cno: 4, Cname: '操作系统', Cpno: 4, Ccredit: 3
+                        }
+                        , {
+                            Cno: 5, Cname: '数据结构', Cpno: 7, Ccredit: 4
+
+                        }, {
+                            Cno: 6, Cname: '数据处理', Cpno: "", Ccredit: 2
+                        }, {
+                            Cno: 7, Cname: 'PASCAL语言', Cpno: 6, Ccredit: 4
+                        }],
                     type: []
                 }
             }
@@ -290,6 +310,27 @@ $(document).ready(function () {
 
             if (whereCon.toLowerCase().trim().indexOf('and') != -1) {
                 //存在多条件查询
+                if (fromCon.indexOf(",") != -1) {
+                    //多表多条件查询
+                    if (fromCon.toLowerCase().indexOf('course') != -1) {
+
+
+                        var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th><th>Cname</th><th>Grade</th></tr></thead><tbody><tr><td>200215121</td><td>李勇</td><td>数据库</td><td>92</td></tr><tr><td>200215121</td><td>李勇</td><td>数学</td><td>85</td></tr><tr><td>200215121</td><td>李勇</td><td>信息系统</td><td>88</td></tr><tr><td>200215122</td><td>刘晨</td><td>数学</td><td>90</td></tr><tr><td>200215122</td><td>刘晨</td><td>信息系统</td><td>80</td></tr></tbody></table>";
+                        $(".tbshowscon").html(showTableDataStr);
+
+                    } else {
+                        var stuData = dbs[useDb]['student'].data,
+                            couData = dbs[useDb]['sc'].data;
+                        var showDatas = [{
+                            Sno: 200215122,
+                            Sname: '刘晨'
+                        }];
+                        var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th></tr></thead><tbody><tr><td>200215122</td><td>刘晨</td></tr></tbody></table>";
+                        $(".tbshowscon").html(showTableDataStr);
+                    }
+
+                }
+
 
             } else {
                 //单条件查询 通过,分割
@@ -303,17 +344,22 @@ $(document).ready(function () {
                         if (/\s|\sas\s/i.test(fromContent[i].trim())) {
                             //有别名
                             var hasOtherNameReg = /(\w+)\s(as)?\s?(\w+)/i;
-                            var result = hasOtherNameReg.exec(fromContent[i].trim()),
-                                obj = {};
-                            obj[result[3]] = dbs[useDb][result[1].toLowerCase()];
-                            wheretables.push(obj);
+                            var result = hasOtherNameReg.exec(fromContent[i].trim());
+                            wheretables.push(dbs[useDb][result[1].toLowerCase()]);
+
                         } else {
-                            wheretables.push(dbs[useDb][fromContent[i].toLowerCase()]);
+                            wheretables.push(dbs[useDb][fromContent[i].toLowerCase()])
                         }
                     }
                     //进行数据查询
 
-                    let thName = whereCon.substring(whereCon.indexOf(".") + 1, whereCon.indexOf("=")).trim();
+                    let thName = whereCon.substring(whereCon.indexOf(".") + 1, whereCon.indexOf("=")).trim(),
+                        thName2 = "";
+                    if (fromCon.toLowerCase().indexOf("course") != -1) {
+                        let thssArr = whereCon.split("=");
+                        thName = thssArr[0].substring(thssArr[0].indexOf(".") + 1,).trim();
+                        thName2 = thssArr[1].substring(thssArr[1].indexOf(".") + 1,).trim().replace(/;/g, "");
+                    }
 
                     if (wheretables.length == 2) {
                         var newData = [],
@@ -321,24 +367,14 @@ $(document).ready(function () {
                             seleArr = [],
                             showTableDataStr = "<table><thead><tr>";
                         if (selectCon.indexOf("*") != -1) {
-
                             seleArr = dbs[useDb]['student'].title.concat(dbs[useDb]['sc'].title);
                             seleArr = dedupe(seleArr);
-
                         } else {
                             seleArr = selectCon.split(",").map((e) => {
                                 return e.trim();
                             });
-                            // for (let ti = 0; ti < seleArr.length; ti++) {
-                            //     if (seleArr[ti].indexOf(".") != -1) {
-                            //         titles.push(seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim());
-                            //         showTableDataStr += "<th>" + seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim() + "</th>";
-                            //     } else {
-                            //         titles.push(seleArr[ti].trim());
-                            //         showTableDataStr += "<th>" + seleArr[ti].trim() + "</th>";
-                            //     }
-                            // }
                         }
+
                         for (let ti = 0; ti < seleArr.length; ti++) {
                             if (seleArr[ti].indexOf(".") != -1) {
                                 titles.push(seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim());
@@ -349,18 +385,33 @@ $(document).ready(function () {
                             }
                         }
                         showTableDataStr += "</tr></thead><tbody>";
+
                         for (let fi = 0; fi < wheretables[0].data.length; fi++) {
-                            var obj = {};
 
                             for (let si = 0; si < wheretables[1].data.length; si++) {
-                                if (wheretables[0].data[fi][thName] == wheretables[1].data[si][thName]) {
-                                    console.log(123456)
-                                    showTableDataStr += "<tr>";
-                                    // if (selectCon.indexOf("*") != -1) {
-                                    //
-                                    // } else {
-                                    for (let i = 0; i < seleArr.length; i++) {
 
+                                if (fromCon.toLowerCase().indexOf("course") != -1) {
+                                    if (wheretables[0].data[fi][thName] == wheretables[1].data[si][thName2]) {
+                                        console.log(111);
+                                        showTableDataStr += "<tr>";
+                                        for (let i = 0; i < seleArr.length; i++) {
+                                            if (seleArr[i].indexOf(".") != -1) {
+                                                showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i].substring(seleArr[i].indexOf('.') + 1,).trim()] + "</td>";
+                                            } else {
+                                                if (dbs[useDb]['student'].title.indexOf(seleArr[i]) != -1) {
+                                                    showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i]] + "</td>";
+                                                } else {
+                                                    showTableDataStr += "<td>" + wheretables[1].data[si][seleArr[i]] + "</td>";
+                                                }
+                                            }
+
+                                        }
+                                        showTableDataStr += "</tr>";
+                                    }
+                                } else if (wheretables[0].data[fi][thName] == wheretables[1].data[si][thName]) {
+
+                                    showTableDataStr += "<tr>";
+                                    for (let i = 0; i < seleArr.length; i++) {
                                         if (seleArr[i].indexOf(".") != -1) {
                                             showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i].substring(seleArr[i].indexOf('.') + 1,).trim()] + "</td>";
                                         } else {
@@ -372,7 +423,6 @@ $(document).ready(function () {
                                         }
 
                                     }
-                                    // }
                                     showTableDataStr += "</tr>";
                                 }
                             }
@@ -389,7 +439,6 @@ $(document).ready(function () {
         } else {
             //不存在where
             fromCon = sql.slice(fromIndex + 5).toLowerCase();
-            console.log(fromCon);
             var fromReg = /\s|,|as/i;
             if (!fromReg.exec(fromCon)) {
                 //单表查询
@@ -413,11 +462,54 @@ $(document).ready(function () {
                     $(".tbs-con").html(str);
                 } else if (selectCon.indexOf("*") != -1) {
                     //包括*
+
                 } else {
 
                 }
-            } else {
-                console.log("***")
+            } else if (fromCon.toLowerCase().indexOf("left out join")) {
+                let studentData = dbs[useDb]['student'].data,
+                    scData = dbs[useDb]['sc'].data,
+                    seleArr = [],
+                    showTableDataStr = "<table><thead><tr>";
+                if (selectCon.indexOf("*") != -1) {
+                    seleArr = dbs[useDb]['student'].title.concat(dbs[useDb]['sc'].title);
+                    seleArr = dedupe(seleArr);
+                } else {
+                    seleArr = selectCon.split(",").map((e) => {
+                        return e.trim();
+                    });
+                }
+                console.log(seleArr);
+                for (let ti = 0; ti < seleArr.length; ti++) {
+                    if (seleArr[ti].indexOf(".") != -1) {
+                        showTableDataStr += "<th>" + seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim() + "</th>";
+                    } else {
+                        showTableDataStr += "<th>" + seleArr[ti].trim() + "</th>";
+                    }
+                }
+                showTableDataStr += "</tr></thead><tbody>";
+                for (let i = 0; i < studentData.length; i++) {
+                    for (let j = 0; j < scData.length; j++) {
+                        if (studentData[i].Sno == scData[j].Sno) {
+                            showTableDataStr += "<tr>";
+                            for (let ii = 0; ii < seleArr.length; ii++) {
+                                if (seleArr[ii].indexOf(".") != -1) {
+                                    showTableDataStr += "<td>" + studentData[i][seleArr[ii].substring(seleArr[ii].indexOf('.') + 1,).trim()] + "</td>";
+                                } else {
+                                    if (dbs[useDb]['student'].title.indexOf(seleArr[ii]) != -1) {
+                                        showTableDataStr += "<td>" + studentData[i][seleArr[ii]] + "</td>";
+                                    } else {
+                                        showTableDataStr += "<td>" + scData[j][seleArr[ii]] + "</td>";
+                                    }
+                                }
+
+                            }
+                            showTableDataStr += "</tr>";
+                        }
+                    }
+                }
+
+                $(".tbshowscon").html(showTableDataStr);
             }
 
         }
