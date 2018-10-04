@@ -336,38 +336,35 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        // for (let ti = 0; ti < seleArr.length; ti++) {
-                        //     if (seleArr[ti].indexOf(".") != -1) {
-                        //         titles.push(seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim());
-                        //         showTableDataStr += "<th>" + seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim() + "</th>";
-                        //     } else {
-                        //         titles.push(seleArr[ti].trim());
-                        //         showTableDataStr += "<th>" + seleArr[ti].trim() + "</th>";
-                        //     }
-                        // }
+
                         showTableDataStr += "</tr></thead><tbody>";
                         for (let fi = 0; fi < wheretables[0].data.length; fi++) {
                             var obj = {};
-                            showTableDataStr += "<tr>";
+
                             for (let si = 0; si < wheretables[1].data.length; si++) {
                                 if (wheretables[0].data[fi][thName] == wheretables[1].data[si][thName]) {
+                                    showTableDataStr += "<tr>";
                                     if (selectCon.indexOf("*") != -1) {
 
                                     } else {
-
                                         for (let i = 0; i < seleArr.length; i++) {
+
                                             if (seleArr[i].indexOf(".") != -1) {
-
+                                                showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i].substring(seleArr[i].indexOf('.') + 1,).trim()] + "</td>";
                                             } else {
-
+                                                if (dbs[useDb]['student'].title.indexOf(seleArr[i]) != -1) {
+                                                    showTableDataStr += "<td>" + wheretables[0].data[fi][seleArr[i]] + "</td>";
+                                                } else {
+                                                    showTableDataStr += "<td>" + wheretables[1].data[si][seleArr[i]] + "</td>";
+                                                }
                                             }
+
                                         }
-
                                     }
-
+                                    showTableDataStr += "</tr>";
                                 }
                             }
-                            showTableDataStr += "</tr>";
+
                         }
                         showTableDataStr += "</tbody></table>";
                         $(".tbshowscon").html(showTableDataStr);
