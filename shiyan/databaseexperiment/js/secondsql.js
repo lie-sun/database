@@ -1,8 +1,60 @@
 $(document).ready(function () {
     var useDb = '',
         tables = [],
-        dbs = {},
-        wheretables = {};
+        dbs = {
+            sct: {
+                student: {
+                    title: ['Sno', 'Sname', 'Ssex', 'Sage', 'Sdept'],
+                    data: [
+                        {
+                            Sno: 200215121,
+                            Sname: "李勇",
+                            Ssex: "男",
+                            Sage: 20,
+                            Sdept: "CS"
+                        },
+                        {
+                            Sno: 200215122,
+                            Sname: "刘晨",
+                            Ssex: "女",
+                            Sage: 19,
+                            Sdept: "CS"
+                        },
+                        {
+                            Sno: 200215123,
+                            Sname: "王敏",
+                            Ssex: "女",
+                            Sage: 18,
+                            Sdept: "MA"
+                        },
+                        {
+                            Sno: 200215125,
+                            Sname: "张立",
+                            Ssex: "男",
+                            Sage: 19,
+                            Sdept: "IS"
+                        },
+                    ]
+                },
+                sc: {
+                    title: ['Sno', 'Cno', "Grade"],
+                    data: [
+                        {Sno: 200215121, Cno: 1, Grade: 92},
+                        {Sno: 200215121, Cno: 2, Grade: 85},
+                        {Sno: 200215121, Cno: 3, Grade: 85},
+                        {Sno: 200215122, Cno: 2, Grade: 90},
+                        {Sno: 200215122, Cno: 3, Grade: 80},
+                    ]
+                },
+                course: {
+                    title: [],
+                    data: [],
+                    type: []
+                }
+            }
+        },
+        wheretables = [],
+        timeOut = "";
 
     $("#do").on("click", function () {
         //sql语句
@@ -64,7 +116,9 @@ $(document).ready(function () {
                     return false;
                 }
                 dbs[dbname] = {};
+                changeText("创建库成功");
                 console.log('创建库成功');
+
             }
         } else if (/table/i.test(sql)) {
             /**
@@ -72,6 +126,7 @@ $(document).ready(function () {
              */
             if (!useDb) {
                 alert("暂未使用数据库");
+                changeText("暂未使用数据库");
                 return false;
             }
             var creatatablereg = /\s*create\s+table\s+(\w+)/i;
@@ -79,29 +134,46 @@ $(document).ready(function () {
             if (createtableresult) {
                 var createtablename = createtableresult[1].toLowerCase();
                 if (dbs[useDb].hasOwnProperty(createtablename)) {
-                    alert("此表已存在");
+                    //alert("此表已存在");
+                    $(".rightss .row").text("此表已存在");
+                    setTimeout(() => {
+                        $(".rightss .row").text("");
+                    }, 2000);
                     return false;
                 }
                 var createtableths = createtableresult.input;
                 createtableths = createtableths.substring(createtableths.indexOf("(") + 1, createtableths.trim().lastIndexOf(")"));
-                var thsArr = createtableths.split(",");
-
+                var priIndex = "";
+                var thsArr = "";
+                if (createtableths.toLowerCase().indexOf("primary key (") != -1) {
+                    priIndex = createtableths.toLowerCase().indexOf("primary") - 2;
+                    thsArr = createtableths.substring(0, priIndex).split(",");
+                } else {
+                    thsArr = createtableths.split(",");
+                }
                 var titles = [], types = [];
                 for (var i = 0; i < thsArr.length; i++) {
-                    var thsreg = /\s*(\w+)\s*/i;
-                    if (/^primary/i.test(thsArr[i].trim()) || /^FOREIGN/i.test(thsArr[i].trim())) {
-                        continue;
+                    if (thsArr[i].toLowerCase().indexOf("foreign key") != -1) {
+
+                    } else {
+                        var thsreg = /\s*(\w+)\s*/i;
+                        var result = thsreg.exec(thsArr[i]);
+                        types.push(result.input.trim().substr(result[1].length + 1).trim());
+                        titles.push(result[1]);
                     }
-                    var result = thsreg.exec(thsArr[i]);
-                    types.push(result.input.trim().substr(result[1].length + 1).trim());
-                    titles.push(result[1]);
+
                 }
                 var obj = {};
                 obj.title = titles;
                 obj.type = types;
                 obj.data = [];
                 dbs[useDb][createtablename] = obj;
+                changeText("创建表成功");
+
+                console.log(dbs);
             }
+        } else if (/UNIQUE/i.test(sql)) {
+            console.log('UNIQUE');
         }
     }
 
@@ -133,6 +205,7 @@ $(document).ready(function () {
         if (useresult) {
             var usename = useresult[1];
             useDb = usename;
+            changeText("使用库成功");
         }
     }
 
@@ -148,7 +221,8 @@ $(document).ready(function () {
             var result = insertreg.exec(sqlarr[i]);
             var inserttablename = result[1].toLowerCase();
             if (!dbs[useDb].hasOwnProperty(inserttablename)) {
-                alert("此表不存在");
+                // alert("此表不存在");
+                changeText("此表不存在");
                 return false;
             }
             result = result.input.substring(result.input.lastIndexOf("(") + 1, result.input.lastIndexOf(")"));
@@ -161,6 +235,7 @@ $(document).ready(function () {
             }
             dbs[useDb][inserttablename].data.push(obj);
         }
+        changeText("添加数据成功");
         console.log(dbs);
 
     }
@@ -186,6 +261,7 @@ $(document).ready(function () {
                 }
             }
         }
+        changeText("更新数据成功");
         console.log(dbs);
 
     }
@@ -195,10 +271,11 @@ $(document).ready(function () {
      * @param sql
      */
     function select(sql) {
-        // if (!useDb) {
-        //     alert("请先使用数据库");
-        //     return false;
-        // }
+        if (!useDb) {
+            // alert("请先使用数据库");
+            // return false;
+            useDb = 'sct';
+        }
         var selectsql = sql.toLowerCase(),
             selectIndex = selectsql.indexOf('select') + 7,
             fromIndex = selectsql.indexOf('from'),
@@ -210,27 +287,93 @@ $(document).ready(function () {
         if (whereIndex != -1) {
             fromCon = sql.slice(fromIndex + 5, whereIndex).trim();
             whereCon = sql.slice(whereIndex + 6).trim();
+
             if (whereCon.toLowerCase().trim().indexOf('and') != -1) {
                 //存在多条件查询
-                alert(1);
+
             } else {
                 //单条件查询 通过,分割
                 if (fromCon.indexOf(",") != -1) {
-                    var fromContent = fromCon.split(",");
+                    wheretables = [];
+                    var fromContent = fromCon.split(",").map((e) => {
+                        return e.trim();
+                    });
                     for (let i = 0; i < fromContent.length; i++) {
                         //判断有没有别名
                         if (/\s|\sas\s/i.test(fromContent[i].trim())) {
                             //有别名
                             var hasOtherNameReg = /(\w+)\s(as)?\s?(\w+)/i;
-                            var result = hasOtherNameReg.exec(fromContent[i].trim());
-                            wheretables[result[3]] = dbs[useDb][result[1].toLowerCase()];
-                            console.log(wheretables);
+                            var result = hasOtherNameReg.exec(fromContent[i].trim()),
+                                obj = {};
+                            obj[result[3]] = dbs[useDb][result[1].toLowerCase()];
+                            wheretables.push(obj);
                         } else {
-                            console.log(fromContent[i].trim());
-                            console.log("无")
+                            wheretables.push(dbs[useDb][fromContent[i].toLowerCase()]);
                         }
                     }
                     //进行数据查询
+
+                    let thName = whereCon.substring(whereCon.indexOf(".") + 1, whereCon.indexOf("=")).trim();
+
+                    if (wheretables.length == 2) {
+                        var newData = [],
+                            titles = [],
+                            seleArr = [],
+                            showTableDataStr = "<table><thead><tr>";
+                        if (selectCon.indexOf("*") != -1) {
+
+                        } else {
+                            seleArr = selectCon.split(",").map((e) => {
+                                return e.trim();
+                            });
+                            for (let ti = 0; ti < seleArr.length; ti++) {
+                                if (seleArr[ti].indexOf(".") != -1) {
+                                    titles.push(seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim());
+                                    showTableDataStr += "<th>" + seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim() + "</th>";
+                                } else {
+                                    titles.push(seleArr[ti].trim());
+                                    showTableDataStr += "<th>" + seleArr[ti].trim() + "</th>";
+                                }
+                            }
+                        }
+                        // for (let ti = 0; ti < seleArr.length; ti++) {
+                        //     if (seleArr[ti].indexOf(".") != -1) {
+                        //         titles.push(seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim());
+                        //         showTableDataStr += "<th>" + seleArr[ti].substring(seleArr[ti].indexOf(".") + 1,).trim() + "</th>";
+                        //     } else {
+                        //         titles.push(seleArr[ti].trim());
+                        //         showTableDataStr += "<th>" + seleArr[ti].trim() + "</th>";
+                        //     }
+                        // }
+                        showTableDataStr += "</tr></thead><tbody>";
+                        for (let fi = 0; fi < wheretables[0].data.length; fi++) {
+                            var obj = {};
+                            showTableDataStr += "<tr>";
+                            for (let si = 0; si < wheretables[1].data.length; si++) {
+                                if (wheretables[0].data[fi][thName] == wheretables[1].data[si][thName]) {
+                                    if (selectCon.indexOf("*") != -1) {
+
+                                    } else {
+
+                                        for (let i = 0; i < seleArr.length; i++) {
+                                            if (seleArr[i].indexOf(".") != -1) {
+
+                                            } else {
+
+                                            }
+                                        }
+
+                                    }
+
+                                }
+                            }
+                            showTableDataStr += "</tr>";
+                        }
+                        showTableDataStr += "</tbody></table>";
+                        $(".tbshowscon").html(showTableDataStr);
+                    } else if (wheretables.length >= 3) {
+
+                    }
 
                 }
             }
@@ -269,5 +412,17 @@ $(document).ready(function () {
             }
 
         }
+    }
+
+    /**
+     * 操作提示
+     * @param text 提示内容
+     */
+    function changeText(text) {
+        clearTimeout(timeOut);
+        $(".rightss .row").text(text);
+        timeOut = setTimeout(() => {
+            $(".rightss .row").text("");
+        }, 5000);
     }
 });

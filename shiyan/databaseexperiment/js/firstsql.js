@@ -48,7 +48,8 @@ $(document).ready(function () {
                 }
             }
         },
-        wheretables = {};
+        wheretables = {},
+        timeOut = "";
 
     $("#do").on("click", function () {
         //sql语句
@@ -598,8 +599,9 @@ $(document).ready(function () {
      * @param text 提示内容
      */
     function changeText(text) {
+        clearTimeout(timeOut);
         $(".rightss .row").text(text);
-        setTimeout(() => {
+        timeOut = setTimeout(() => {
             $(".rightss .row").text("");
         }, 5000);
     }
