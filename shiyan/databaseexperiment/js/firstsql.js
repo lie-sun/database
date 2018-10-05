@@ -190,6 +190,10 @@ $(document).ready(function () {
                 thName = alterTableResult[2],
                 thType = alterTableResult[3];
             // console.log(dbs[useDb][alterTableName]);
+            if (!dbs[useDb].hasOwnProperty(alterTableName)) {
+                changeText("未发现此表存在");
+                return false;
+            }
             dbs[useDb][alterTableName]['title'].push(thName);
             dbs[useDb][alterTableName]['type'].push(thType);
             changeText("修改成功");
@@ -471,10 +475,10 @@ $(document).ready(function () {
                         newDatas = [];
                     for (let i = 0; i < data.length; i++) {
                         showTableStr += "<tr>";
-                        if (data[i][whereConName] == whereConValue) {
+                        if (data[i][whereConName].trim() == whereConValue.trim()) {
                             let newArr = {};
                             for (let si = 0; si < selecArr.length; si++) {
-                                newArr[selecArr[si]] = data[i][selecArr[si]];
+                                newArr[selecArr[si].trim()] = data[i][selecArr[si]].trim();
                             }
                             newDatas.push(newArr)
                         }
@@ -486,6 +490,7 @@ $(document).ready(function () {
                             newDatas.sort(sortBy(borderResult[1], false));
                         }
                     }
+                    console.log(newDatas);
                     for (let di = 0; di < newDatas.length; di++) {
                         showTableStr += "<tr>";
                         for (let si = 0; si < selecArr.length; si++) {
@@ -513,7 +518,7 @@ $(document).ready(function () {
         } else {
             //不存在where
             fromCon = sql.slice(fromIndex + 5).toLowerCase().replace(/;/, '').trim();
-            if (!dbs[useDb].hasOwnProperty(fromCon)) {
+            if (!dbs[useDb].hasOwnProperty(fromCon.substring(0, fromCon.toLowerCase().indexOf(" ")).toLowerCase().trim())) {
                 changeText("此表不存在");
                 return false;
             }
@@ -540,7 +545,8 @@ $(document).ready(function () {
                     $(".tbshowscon").html(str);
                 } else {
 
-                    if (!dbs[useDb][fromCon]) {
+                    if (!dbs[useDb].hasOwnProperty(fromCon.toLowerCase().trim())) {
+                        console.log(dbs[useDb]);
                         changeText("此表不存在");
                         return false;
                     }

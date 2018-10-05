@@ -1,5 +1,6 @@
 $(document).ready(function () {
     let views = {},
+        timeOut = "",
         dbs = {
             sct: {
                 student: {
@@ -86,7 +87,7 @@ $(document).ready(function () {
                     title: ["Sno", "Cno", "Grade"],
                     data: [
                         {
-                            Sno: 200215121,
+                            Sno: 200215125,
                             Cno: 1,
                             Grade: 92
                         },
@@ -188,17 +189,15 @@ $(document).ready(function () {
                         }
                     }
                     views[viewname] = newObj;
+                    changeText("创建视图成功");
                     console.log(views);
                 }
             }
         } else {
             fromcon = sql.substring(LowerCasesql.indexOf("from") + 4, LowerCasesql.indexOf("group")).toLowerCase().trim();
             let groupby = sql.substring(LowerCasesql.indexOf("group by") + 8).replace(/;/g, "").trim();
-
             var data = dbs.sct[fromcon];
         }
-
-
     }
 
     /**
@@ -206,7 +205,52 @@ $(document).ready(function () {
      * @param sql
      */
     function selectView(sql) {
-        console.log("select");
+        let tlsql = sql.toLowerCase(),
+            seleConArr = sql.substring(tlsql.indexOf("select") + 6, tlsql.indexOf("from")).split(",").map((e) => {
+                return e.trim();
+            }),
+            whereCon = sql.substring(tlsql.indexOf("where") + 5,),
+            whereConArr = [];
+        if (whereCon.toLowerCase().indexOf("and") != -1) {
+            whereConArr = whereCon.split("AND").map((e) => {
+                return e.trim();
+            });
+            if (!views.hasOwnProperty('is_student')) {
+                changeText("is_student视图不存在");
+                return false;
+            }
+            let isstudentData = views.is_student.data,
+                scData = dbs.sct.sc.data,
+                num = "",
+                showTableStr = "<table><thead><tr>";
+            for (let ti = 0; ti < seleConArr.length; ti++) {
+                showTableStr += "<th>" + seleConArr[ti] + "</th>";
+            }
+            showTableStr += "</tr></thead><tbody>";
+            for (let w = 0; w < whereConArr.length; w++) {
+                console.log(whereConArr[w]);
+                if (whereConArr[w].toLowerCase().indexOf("sc.cno") != -1) {
+                    num = whereConArr[w].substring(whereConArr[w].toLowerCase().indexOf("=") + 1,).replace(/'|"/g, "").trim();
+                }
+            }
+
+            for (let i = 0; i < isstudentData.length; i++) {
+                showTableStr += "<tr>";
+                for (let j = 0; j < scData.length; j++) {
+                    if (scData[j]['Cno'] == num && isstudentData[i]['Sno'] == scData[j]['Sno']) {
+                        for (let si = 0; si < seleConArr.length; si++) {
+                            showTableStr += "<td>" + isstudentData[i][seleConArr[si]] + "</td>";
+                        }
+
+                    }
+                }
+                showTableStr += "</tr>";
+            }
+            $(".tbshowscon").html(showTableStr);
+
+
+        }
+
     }
 
     /**
@@ -243,4 +287,18 @@ $(document).ready(function () {
         }
         console.log(views);
     }
+
+
+    /**
+     * 操作提示
+     * @param text 提示内容
+     */
+    function changeText(text) {
+        clearTimeout(timeOut);
+        $(".rightss .row").text(text);
+        timeOut = setTimeout(() => {
+            $(".rightss .row").text("");
+        }, 5000);
+    }
+
 });

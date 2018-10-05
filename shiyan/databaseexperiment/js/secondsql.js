@@ -337,7 +337,7 @@ $(document).ready(function () {
                     }
                 } else if (whereCon.toLowerCase().indexOf("sage") == 0) {
                     age();
-                } else if (whereCon.toLowerCase().indexOf("exists") == 0 && whereCon.toLowerCase().indexOf("1") != -1) {
+                } else if (whereCon.toLowerCase().indexOf("exists") == 0 && whereCon.toLowerCase().indexOf("1") != -1&& whereCon.toLowerCase().indexOf("刘晨") == -1) {
                     name();
                 } else if (whereCon.toLowerCase().indexOf("200215122") != -1) {
                     sno();
@@ -354,6 +354,7 @@ $(document).ready(function () {
                 } else {
                     console.log(whereCon);
                     changeText("语法有错误");
+                    $(".tbshowscon").html("");
                 }
 
             } else if (whereCon.toLowerCase().indexOf(">=") != -1 && whereCon.toLowerCase().indexOf("where") != -1) {
@@ -366,6 +367,7 @@ $(document).ready(function () {
                 sno();
             } else if (whereCon.toUpperCase().indexOf("EXCEPT") != -1) {
                 changeText("暂无数据");
+                $(".tbshowscon").html("");
             } else if (whereCon.toLowerCase().indexOf("in") != -1 || whereCon.toLowerCase().indexOf("exists") != -1) {
                 fiveShow();
             } else {

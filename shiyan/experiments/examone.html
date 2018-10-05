@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="../app/css/libs/videojs/5.11.7/video-js.min.css">
     <link rel="stylesheet" href="../app/css/dest/styles.css?=2016121272249">
-
+    <script src="jquery.min.js"></script>
     <style>
         @font-face {
             font-family: "lantingxihei";
@@ -111,7 +111,6 @@
         }
     </style>
 
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 
@@ -189,7 +188,7 @@
 
 
                             <p>
-                                <button class="btn">RUN</button>
+                                <button class="btn btn1">RUN</button>
                             </p>
                             <textarea id="textcon" style="height: 460px">
 <!doctype html>
@@ -221,24 +220,28 @@
                     </div>
 
                     <script>
-                        $(".btn").on("click", function () {
-                            var str = $("#textcon").val();
-                            $.ajax({
-                                url: "./Experiment.php",
-                                type: "post",
-                                data: {
-                                    num: "one",
-                                    str: str
-                                },
-                                success: (e) => {
-                                    console.log(e)
-                                    $(".frame").attr("src", e);
-                                },
-                                fail: (err) => {
-                                    console.log(err)
-                                }
+                        $(document).ready(function () {
+                            $(".btn1").on("click", function () {
+                                console.log(232);
+                                var str = $("#textcon").val();
+                                $.ajax({
+                                    url: "./Experiment.php",
+                                    type: "post",
+                                    data: {
+                                        num: "one",
+                                        str: str
+                                    },
+                                    success: (e) => {
+                                        console.log(e);
+                                        $(".frame").attr("src", e);
+                                    },
+                                    fail: (err) => {
+                                        console.log(err)
+                                    }
+                                })
                             })
-                        })
+                        });
+
                     </script>
                 </div>
             </div>
