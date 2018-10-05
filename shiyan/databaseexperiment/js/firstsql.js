@@ -512,8 +512,8 @@ $(document).ready(function () {
             }
         } else {
             //不存在where
-            fromCon = sql.slice(fromIndex + 5).toLowerCase().replace(/;/, '');
-            if (dbs[useDb].hasOwnProperty(fromCon)) {
+            fromCon = sql.slice(fromIndex + 5).toLowerCase().replace(/;/, '').trim();
+            if (!dbs[useDb].hasOwnProperty(fromCon)) {
                 changeText("此表不存在");
                 return false;
             }
