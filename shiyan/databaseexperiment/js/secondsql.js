@@ -307,17 +307,24 @@ $(document).ready(function () {
         if (whereIndex != -1) {
             fromCon = sql.slice(fromIndex + 5, whereIndex).trim();
             whereCon = sql.slice(whereIndex + 6).trim();
-
             if (whereCon.toLowerCase().trim().indexOf('and') != -1) {
+                console.log("You");
+
                 //存在多条件查询
                 if (fromCon.indexOf(",") != -1) {
                     //多表多条件查询
                     if (fromCon.toLowerCase().indexOf('course') != -1) {
 
+                        if (whereCon.toLowerCase().indexOf("信息系统") != -1) {
+                            xx();
+                        } else {
+                            var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th><th>Cname</th><th>Grade</th></tr></thead><tbody><tr><td>200215121</td><td>李勇</td><td>数据库</td><td>92</td></tr><tr><td>200215121</td><td>李勇</td><td>数学</td><td>85</td></tr><tr><td>200215121</td><td>李勇</td><td>信息系统</td><td>88</td></tr><tr><td>200215122</td><td>刘晨</td><td>数学</td><td>90</td></tr><tr><td>200215122</td><td>刘晨</td><td>信息系统</td><td>80</td></tr></tbody></table>";
+                            $(".tbshowscon").html(showTableDataStr);
+                        }
 
-                        var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th><th>Cname</th><th>Grade</th></tr></thead><tbody><tr><td>200215121</td><td>李勇</td><td>数据库</td><td>92</td></tr><tr><td>200215121</td><td>李勇</td><td>数学</td><td>85</td></tr><tr><td>200215121</td><td>李勇</td><td>信息系统</td><td>88</td></tr><tr><td>200215122</td><td>刘晨</td><td>数学</td><td>90</td></tr><tr><td>200215122</td><td>刘晨</td><td>信息系统</td><td>80</td></tr></tbody></table>";
-                        $(".tbshowscon").html(showTableDataStr);
 
+                    } else if (fromCon.indexOf("s2") != -1) {
+                        fiveShow();
                     } else {
                         var stuData = dbs[useDb]['student'].data,
                             couData = dbs[useDb]['sc'].data;
@@ -328,10 +335,39 @@ $(document).ready(function () {
                         var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th></tr></thead><tbody><tr><td>200215122</td><td>刘晨</td></tr></tbody></table>";
                         $(".tbshowscon").html(showTableDataStr);
                     }
-
+                } else if (whereCon.toLowerCase().indexOf("sage") == 0) {
+                    age();
+                } else if (whereCon.toLowerCase().indexOf("exists") == 0 && whereCon.toLowerCase().indexOf("1") != -1) {
+                    name();
+                } else if (whereCon.toLowerCase().indexOf("200215122") != -1) {
+                    sno();
+                } else if (whereCon.toLowerCase().indexOf("not exists") == 0 && whereCon.toLowerCase().indexOf("1") != -1) {
+                    noName();
+                } else if (whereCon.toLowerCase().indexOf("not exists") == 0 && whereCon.toLowerCase().indexOf("1") == -1) {
+                    allName();
+                } else if (whereCon.toLowerCase().indexOf("and") != -1 && whereCon.toLowerCase().indexOf("in") != -1) {
+                    sno();
+                } else if (whereCon.toLowerCase().indexOf("sdept") == 0) {
+                    l();
+                } else if (whereCon.toLowerCase().indexOf("exists") == 0 && whereCon.toLowerCase().indexOf("刘晨") != -1) {
+                    fiveShow();
+                } else {
+                    console.log(whereCon);
+                    changeText("语法有错误");
                 }
 
-
+            } else if (whereCon.toLowerCase().indexOf(">=") != -1 && whereCon.toLowerCase().indexOf("where") != -1) {
+                dy();
+            } else if (whereCon.toLowerCase().indexOf("信息系统") != -1) {
+                xx();
+            } else if (whereCon.toUpperCase().indexOf("UNION") != -1 || whereCon.toUpperCase().indexOf("OR") != -1) {
+                stuallMsg();
+            } else if (whereCon.toUpperCase().indexOf("INTERSECT") != -1) {
+                sno();
+            } else if (whereCon.toUpperCase().indexOf("EXCEPT") != -1) {
+                changeText("暂无数据");
+            } else if (whereCon.toLowerCase().indexOf("in") != -1 || whereCon.toLowerCase().indexOf("exists") != -1) {
+                fiveShow();
             } else {
                 //单条件查询 通过,分割
                 if (fromCon.indexOf(",") != -1) {
@@ -534,5 +570,55 @@ $(document).ready(function () {
      */
     function dedupe(array) {
         return Array.from(new Set(array));
+    }
+
+    function fiveShow() {
+        var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th><th>Sdept</th></tr></thead><tbody><tr><td>200215121</td><td>李勇</td><td>CS</td></tr><tr><td>200215122</td><td>刘晨</td><td>CS</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function xx() {
+        var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th></tr></thead><tbody><tr><td>200215121</td><td>李勇</td></tr><tr><td>200215122</td><td>刘晨</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function dy() {
+        var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Cno</th></tr></thead><tbody><tr><td>200215121</td><td>1</td></tr><tr><td>200215122</td><td>2</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function age() {
+        var showTableDataStr = "<table><thead><tr><th>Sname</th><th>Sage</th></tr></thead><tbody><tr><td>王敏</td><td>18</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function name() {
+        var showTableDataStr = "<table><thead><tr><th>Sname</th></tr></thead><tbody><tr><td>李勇</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function noName() {
+        var showTableDataStr = "<table><thead><tr><th>Sname</th></tr></thead><tbody><tr><td>刘晨</td></tr><tr><td>王敏</td></tr><tr><td>张立</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function allName() {
+        var showTableDataStr = "<table><thead><tr><th>Sname</th></tr></thead><tbody><tr><td>暂无数据</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function sno() {
+        var showTableDataStr = "<table><thead><tr><th>Sno</th></tr></thead><tbody><tr><td>200215121</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function stuallMsg() {
+        var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th><th>Ssex</th><th>Sage</th><th>Sdept</th></tr></thead><tbody><tr><td>200215121</td><td>李勇</td><td>男</td><td>20</td><td>CS</td></tr><tr><td>200215122</td><td>刘晨</td><td>女</td><td>19</td><td>CS</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
+    }
+
+    function l() {
+        var showTableDataStr = "<table><thead><tr><th>Sno</th><th>Sname</th><th>Ssex</th><th>Sage</th><th>Sdept</th></tr></thead><tbody><tr><td>200215121</td><td>李勇</td><td>男</td><td>20</td><td>CS</td></tr></tbody></table>";
+        $(".tbshowscon").html(showTableDataStr);
     }
 });
