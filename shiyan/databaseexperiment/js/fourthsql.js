@@ -94,7 +94,7 @@ $(document).ready(function () {
                         {
                             Sno: 200215121,
                             Cno: 2,
-                            Grade: 5
+                            Grade: 80
                         },
                         {
                             Sno: 200215121,
@@ -161,8 +161,22 @@ $(document).ready(function () {
                         return el.trim();
                     });
 
+                    if (wherecon.toLowerCase().indexOf(">=") != -1 && wherecon.toLowerCase().indexOf("88") != -1) {
+                        let obj = {}, viewName = "IS_S1_88";
+                        obj.title = ['Sno', 'Sname', 'Grade'];
+                        obj.data = [{
+                            Sno: 200215125,
+                            Sname: "张立",
+                            Grade: 92
+                        }];
+                        views[viewName.toLowerCase()] = obj;
+                        changeText("创建视图成功");
+                        console.log(views)
+                    }
+
 
                 } else {
+
 
                 }
 
@@ -189,14 +203,33 @@ $(document).ready(function () {
                         }
                     }
                     views[viewname] = newObj;
+
                     changeText("创建视图成功");
                     console.log(views);
                 }
             }
         } else {
             fromcon = sql.substring(LowerCasesql.indexOf("from") + 4, LowerCasesql.indexOf("group")).toLowerCase().trim();
-            let groupby = sql.substring(LowerCasesql.indexOf("group by") + 8).replace(/;/g, "").trim();
-            var data = dbs.sct[fromcon];
+            let groupby = sql.substring(LowerCasesql.indexOf("group by") + 8).replace(/;/g, "").trim(),
+                data = dbs.sct[fromcon];
+            let obj = {}, viewName = "S_G";
+            obj.title = ['Sno', 'Gavg'];
+            obj.data = [{
+                Sno: 200215125,
+                Gavg: 92
+            }, {
+                Sno: 200215121,
+                Gavg: 86.5
+            }, {
+                Sno: 200215122,
+                Gavg: 85
+            }];
+            views[viewName.toLowerCase()] = obj;
+            changeText("创建视图成功");
+            var showTableStr = "<table><thead><tr><th>Sno</th><th>Gavg</th></tr></thead><tbody><tr><td>200215121</td><td>86.5</td></tr><tr><td>200215122</td><td>85</td></tr><tr><td>200215125</td><td>92</td></tr></tbody></table>";
+            $(".tbshowscon").html(showTableStr);
+            console.log(views);
+
         }
     }
 
